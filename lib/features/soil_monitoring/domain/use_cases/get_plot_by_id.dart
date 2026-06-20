@@ -1,5 +1,5 @@
-import '../../domain/entities/plot.dart';
-import '../../domain/repositories/plot_repository.dart';
+﻿import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
 
 class GetPlotById {
   const GetPlotById(this._repository);

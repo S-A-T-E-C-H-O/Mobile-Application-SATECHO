@@ -1,4 +1,4 @@
-import '../value_objects/plot_status.dart';
+﻿import 'package:satecho_mobile/features/soil_monitoring/domain/plot_status.dart';
 import 'sensor_metric.dart';
 
 class Plot {
