@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../../../irrigation/presentation/pages/irrigation_page.dart';
-import '../controllers/plots_controller.dart';
-import '../widgets/plot_card.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
+import 'package:satecho_mobile/features/soil_monitoring/presentation/controllers/plots_controller.dart';
+import 'package:satecho_mobile/features/soil_monitoring/presentation/widgets/plot_card.dart';
 
 class PlotsPage extends StatefulWidget {
   const PlotsPage({super.key});

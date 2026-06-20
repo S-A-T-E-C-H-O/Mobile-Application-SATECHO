@@ -1,8 +1,8 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../models/farm_model.dart';
-import '../../models/sensor_reading_model.dart';
-import '../../models/zone_model.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/farm_model.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/sensor_reading_model.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/zone_with_thresholds_model.dart';
 
 class ZoneWithTelemetry {
   const ZoneWithTelemetry({required this.zone, required this.readings});

@@ -1,8 +1,8 @@
-import '../../domain/entities/plot.dart';
-import '../../domain/entities/sensor_metric.dart';
-import '../../domain/repositories/plot_repository.dart';
-import '../../domain/value_objects/plot_status.dart';
-import '../models/plot_model.dart';
+﻿import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_status.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/plot_model.dart';
 
 class MockPlotRepository implements PlotRepository {
   final _plots = <Plot>[

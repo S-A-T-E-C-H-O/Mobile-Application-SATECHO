@@ -1,10 +1,10 @@
-import '../../domain/entities/plot.dart';
-import '../../domain/entities/sensor_metric.dart';
-import '../../domain/repositories/plot_repository.dart';
-import '../../domain/value_objects/plot_status.dart';
-import '../data_sources/remote/plot_remote_data_source.dart';
-import '../models/sensor_reading_model.dart';
-import '../models/zone_model.dart';
+﻿import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_status.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/plot_remote_data_source.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/sensor_reading_model.dart';
+import 'package:satecho_mobile/features/soil_monitoring/data/zone_with_thresholds_model.dart';
 
 class PlotRepositoryImpl implements PlotRepository {
   const PlotRepositoryImpl(this._remote);
