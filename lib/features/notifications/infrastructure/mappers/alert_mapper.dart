@@ -1,0 +1,3 @@
+class AlertMapper {
+  const AlertMapper();
+}
