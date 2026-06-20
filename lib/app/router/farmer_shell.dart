@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../core/presentation/widgets/satecho_bottom_nav.dart';
-import '../../features/advisory/presentation/pages/recommendations_page.dart';
-import '../../features/analytics/presentation/pages/home_page.dart';
-import '../../features/notifications/presentation/pages/alerts_page.dart';
-import '../../features/soil_monitoring/presentation/pages/plots_page.dart';
-import '../../features/user_profile/presentation/pages/profile_page.dart';
+import 'package:satecho_mobile/core/widgets/satecho_bottom_nav.dart';
+import 'package:satecho_mobile/features/advisory/presentation/pages/recommendations_page.dart';
+import 'package:satecho_mobile/features/analytics/presentation/pages/home_page.dart';
+import 'package:satecho_mobile/features/notifications/presentation/pages/alerts_page.dart';
+import 'package:satecho_mobile/features/soil_monitoring/presentation/pages/plots_page.dart';
+import 'package:satecho_mobile/features/user_profile/presentation/pages/profile_page.dart';
 
 class FarmerShell extends StatefulWidget {
   const FarmerShell({super.key});

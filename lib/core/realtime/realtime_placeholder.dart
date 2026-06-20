@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import '../../features/perimeter_security/domain/entities/security_event.dart';
-import '../../features/soil_monitoring/domain/entities/sensor_metric.dart';
+import 'package:satecho_mobile/features/perimeter_security/domain/security_event.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
 
 enum RealtimeEventType {
   sensorReading,
