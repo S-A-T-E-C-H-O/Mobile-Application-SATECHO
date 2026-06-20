@@ -1,10 +1,10 @@
-import '../../../irrigation/domain/repositories/irrigation_repository.dart';
-import '../../../notifications/domain/repositories/alert_repository.dart';
-import '../../../soil_monitoring/domain/repositories/plot_repository.dart';
-import '../../domain/entities/farmer_dashboard.dart';
-import '../../domain/entities/weather_summary.dart';
-import '../../domain/repositories/dashboard_repository.dart';
-import '../data_sources/remote/dashboard_remote_data_source.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
+import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
+import 'package:satecho_mobile/features/analytics/domain/weather_summary.dart';
+import 'package:satecho_mobile/features/analytics/domain/dashboard_repository.dart';
+import 'package:satecho_mobile/features/analytics/data/dashboard_remote_data_source.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
   const DashboardRepositoryImpl({

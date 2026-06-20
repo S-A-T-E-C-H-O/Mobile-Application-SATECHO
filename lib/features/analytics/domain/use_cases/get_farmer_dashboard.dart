@@ -1,5 +1,5 @@
-import '../../domain/entities/farmer_dashboard.dart';
-import '../../domain/repositories/dashboard_repository.dart';
+﻿import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
+import 'package:satecho_mobile/features/analytics/domain/dashboard_repository.dart';
 
 class GetFarmerDashboard {
   const GetFarmerDashboard(this._repository);

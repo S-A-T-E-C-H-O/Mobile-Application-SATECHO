@@ -1,6 +1,6 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../../domain/entities/farmer_dashboard.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
 
 class DashboardRemoteDataSource {
   const DashboardRemoteDataSource(this._client);

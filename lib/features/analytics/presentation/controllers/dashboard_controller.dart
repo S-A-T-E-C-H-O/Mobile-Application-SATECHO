@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../application/use_cases/get_farmer_dashboard.dart';
-import '../../domain/entities/farmer_dashboard.dart';
+import 'package:satecho_mobile/features/analytics/domain/use_cases/get_farmer_dashboard.dart';
+import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
 
 class DashboardController extends ChangeNotifier {
   DashboardController(this._getFarmerDashboard);
