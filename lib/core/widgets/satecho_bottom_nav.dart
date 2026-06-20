@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
 
 class SatechoBottomNav extends StatelessWidget {
   const SatechoBottomNav({

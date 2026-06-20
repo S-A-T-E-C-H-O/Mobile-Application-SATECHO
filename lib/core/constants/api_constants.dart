@@ -1,9 +1,7 @@
 class ApiConstants {
   ApiConstants._();
 
-  // Change to your actual server IP/hostname for device testing.
-  // 10.0.2.2 = Android emulator → host machine localhost.
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = 'http://agrosafe-back.eastus2.azurecontainer.io:8080';
 
   // Auth
   static const String signIn = '/api/v1/authentication/sign-in';

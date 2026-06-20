@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import '../constants/api_constants.dart';
-import '../storage/token_storage.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/storage/token_storage.dart';
 
 class ApiClient {
   ApiClient({required TokenStorage tokenStorage}) {
