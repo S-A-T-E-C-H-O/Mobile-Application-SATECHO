@@ -1,5 +1,5 @@
-import '../entities/irrigation_session.dart';
-import '../entities/upcoming_irrigation.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
+import 'package:satecho_mobile/features/irrigation/domain/upcoming_irrigation.dart';
 
 abstract class IrrigationRepository {
   Future<IrrigationSession> getCurrentSession(String plotId);

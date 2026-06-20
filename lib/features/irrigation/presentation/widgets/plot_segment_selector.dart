@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../../soil_monitoring/domain/entities/plot.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
 
 class PlotSegmentSelector extends StatelessWidget {
   const PlotSegmentSelector({

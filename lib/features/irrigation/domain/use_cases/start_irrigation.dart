@@ -1,5 +1,5 @@
-import '../../domain/entities/irrigation_session.dart';
-import '../../domain/repositories/irrigation_repository.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
 
 class StartIrrigation {
   const StartIrrigation(this._repository);

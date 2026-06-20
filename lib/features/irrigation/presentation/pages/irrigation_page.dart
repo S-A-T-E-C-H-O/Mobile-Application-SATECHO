@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../../soil_monitoring/domain/entities/sensor_metric.dart';
-import '../../../zones/presentation/pages/threshold_calibration_page.dart';
-import '../controllers/irrigation_controller.dart';
-import '../widgets/duration_selector.dart';
-import '../widgets/irrigation_control_card.dart';
-import '../widgets/plot_segment_selector.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
+import 'package:satecho_mobile/features/zones/presentation/pages/threshold_calibration_page.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/controllers/irrigation_controller.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/widgets/duration_selector.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/widgets/irrigation_control_card.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/widgets/plot_segment_selector.dart';
 
 class _IrrigationHistoryTile extends StatelessWidget {
   const _IrrigationHistoryTile({required this.entry});

@@ -1,7 +1,7 @@
-import '../../domain/entities/irrigation_session.dart';
-import '../../domain/entities/upcoming_irrigation.dart';
-import '../../domain/repositories/irrigation_repository.dart';
-import '../models/irrigation_session_model.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
+import 'package:satecho_mobile/features/irrigation/domain/upcoming_irrigation.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
+import 'package:satecho_mobile/features/irrigation/data/irrigation_session_model.dart';
 
 class MockIrrigationRepository implements IrrigationRepository {
   final Map<String, IrrigationSession> _sessions = {
