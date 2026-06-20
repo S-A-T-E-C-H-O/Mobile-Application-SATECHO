@@ -1,7 +1,7 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../models/irrigation_schedule_model.dart';
-import '../../models/irrigation_session_model.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/irrigation/data/irrigation_schedule_model.dart';
+import 'package:satecho_mobile/features/irrigation/data/irrigation_session_model.dart';
 
 class IrrigationRemoteDataSource {
   const IrrigationRemoteDataSource(this._client);

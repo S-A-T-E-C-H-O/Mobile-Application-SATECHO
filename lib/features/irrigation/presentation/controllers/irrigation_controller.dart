@@ -1,15 +1,15 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../../core/realtime/realtime_placeholder.dart';
-import '../../../soil_monitoring/application/use_cases/get_plots.dart';
-import '../../../soil_monitoring/domain/entities/plot.dart';
-import '../../application/use_cases/get_current_irrigation_session.dart';
-import '../../application/use_cases/get_irrigation_history.dart';
-import '../../application/use_cases/start_irrigation.dart';
-import '../../application/use_cases/stop_irrigation.dart';
-import '../../domain/entities/irrigation_session.dart';
+import 'package:satecho_mobile/core/realtime/realtime_placeholder.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/use_cases/get_plots.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/irrigation/domain/use_cases/get_current_irrigation_session.dart';
+import 'package:satecho_mobile/features/irrigation/domain/use_cases/get_irrigation_history.dart';
+import 'package:satecho_mobile/features/irrigation/domain/use_cases/start_irrigation.dart';
+import 'package:satecho_mobile/features/irrigation/domain/use_cases/stop_irrigation.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
 
 class IrrigationController extends ChangeNotifier {
   IrrigationController({
