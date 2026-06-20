@@ -1,6 +1,6 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../models/notification_model.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/notifications/data/notification_model.dart';
 
 class AlertRemoteDataSource {
   const AlertRemoteDataSource(this._client);

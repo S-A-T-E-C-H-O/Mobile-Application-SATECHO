@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../../farms/presentation/pages/estate_detail_page.dart';
-import '../controllers/agronomist_alerts_controller.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/farms/presentation/pages/estate_detail_page.dart';
+import 'package:satecho_mobile/features/notifications/presentation/controllers/agronomist_alerts_controller.dart';
 
 class AgronomistAlertsPage extends StatefulWidget {
   const AgronomistAlertsPage({super.key});

@@ -1,5 +1,5 @@
-import '../../domain/entities/agronomist_alert.dart';
-import '../../domain/repositories/agronomist_alert_repository.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/agronomist_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/agronomist_alert_repository.dart';
 
 class GetAgronomistAlerts {
   const GetAgronomistAlerts(this._repository);
