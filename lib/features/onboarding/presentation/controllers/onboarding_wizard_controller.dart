@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../domain/repositories/onboarding_repository.dart';
+import 'package:satecho_mobile/features/onboarding/domain/onboarding_repository.dart';
 
 class OnboardingWizardController extends ChangeNotifier {
   OnboardingWizardController({required OnboardingRepository repository})

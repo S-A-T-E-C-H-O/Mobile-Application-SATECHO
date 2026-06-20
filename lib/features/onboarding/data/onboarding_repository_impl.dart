@@ -1,6 +1,6 @@
-import '../../domain/entities/onboarding_progress.dart';
-import '../../domain/repositories/onboarding_repository.dart';
-import '../data_sources/remote/onboarding_remote_data_source.dart';
+﻿import 'package:satecho_mobile/features/onboarding/domain/onboarding_progress.dart';
+import 'package:satecho_mobile/features/onboarding/domain/onboarding_repository.dart';
+import 'package:satecho_mobile/features/onboarding/data/onboarding_remote_data_source.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
   const OnboardingRepositoryImpl(this._remote);

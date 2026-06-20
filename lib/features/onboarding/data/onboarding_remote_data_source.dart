@@ -1,6 +1,6 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../models/onboarding_status_model.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/onboarding/data/onboarding_status_model.dart';
 
 class OnboardingRemoteDataSource {
   const OnboardingRemoteDataSource(this._client);
@@ -25,7 +25,7 @@ class OnboardingRemoteDataSource {
   Future<List<Map<String, dynamic>>> getCropTypes() async {
     try {
       final response =
-      await _client.get<List<dynamic>>('/api/v1/crops/types');
+          await _client.get<List<dynamic>>('/api/v1/crops/types');
       return (response.data as List<dynamic>)
           .cast<Map<String, dynamic>>()
           .toList();
