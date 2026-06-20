@@ -18,9 +18,10 @@ flutter run
 
 ```text
 lib/
-├── app.dart             # Configuración raíz de la aplicación
-├── core/                # Código transversal (tema, servicios, utilidades)
-└── features/            # Módulos de negocio independientes
+├── app/                  # Código de la capa de UI y widgets principales
+├── core/                 # Código transversal (tema, servicios, utilidades)
+├── feature/              # Módulos de negocio independientes (una carpeta por feature)
+└── main.dart             # Punto de entrada de la aplicación
 ```
 
 Cada nueva funcionalidad debe vivir en una rama `feature/<nombre>` creada desde `develop`. Al terminarla, se integra mediante pull request hacia `develop`.
