@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../infrastructure/data_sources/remote/alert_remote_data_source.dart';
+import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart';
 
 class NotificationPreferencesController extends ChangeNotifier {
   NotificationPreferencesController({AlertRemoteDataSource? remote})

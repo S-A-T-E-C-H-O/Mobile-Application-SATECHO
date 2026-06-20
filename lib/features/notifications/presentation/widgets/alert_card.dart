@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../domain/entities/farm_alert.dart';
-import '../../domain/value_objects/alert_severity.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/notifications/domain/farm_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
 
 class AlertCard extends StatelessWidget {
   const AlertCard({

@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../application/use_cases/get_agronomist_alerts.dart';
-import '../../domain/entities/agronomist_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/use_cases/get_agronomist_alerts.dart';
+import 'package:satecho_mobile/features/notifications/domain/agronomist_alert.dart';
 
 class AgronomistAlertsController extends ChangeNotifier {
   AgronomistAlertsController(this._getAlerts);

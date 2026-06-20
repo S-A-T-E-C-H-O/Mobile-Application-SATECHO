@@ -1,6 +1,6 @@
-import '../../domain/entities/agronomist_alert.dart';
-import '../../domain/repositories/agronomist_alert_repository.dart';
-import '../data_sources/remote/alert_remote_data_source.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/agronomist_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/agronomist_alert_repository.dart';
+import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart';
 
 class AgronomistAlertRepositoryImpl implements AgronomistAlertRepository {
   const AgronomistAlertRepositoryImpl(this._remote);

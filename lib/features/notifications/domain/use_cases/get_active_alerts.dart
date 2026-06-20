@@ -1,5 +1,5 @@
-import '../../domain/entities/farm_alert.dart';
-import '../../domain/repositories/alert_repository.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/farm_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
 
 class GetActiveAlerts {
   const GetActiveAlerts(this._repository);
