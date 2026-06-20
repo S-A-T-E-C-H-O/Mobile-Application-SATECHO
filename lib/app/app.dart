@@ -5,10 +5,10 @@ import 'roles/user_role.dart';
 import 'router/agronomist_shell.dart';
 import 'router/farmer_shell.dart';
 import 'theme/app_theme.dart';
-import '../features/auth/presentation/pages/login_page.dart';
-import '../features/auth/presentation/pages/register_page.dart';
-import '../features/auth/presentation/pages/verify_email_page.dart';
-import '../features/onboarding/presentation/pages/onboarding_wizard_page.dart';
+import 'package:satecho_mobile/features/auth/presentation/pages/login_page.dart';
+import 'package:satecho_mobile/features/auth/presentation/pages/register_page.dart';
+import 'package:satecho_mobile/features/auth/presentation/pages/verify_email_page.dart';
+import 'package:satecho_mobile/features/onboarding/presentation/pages/onboarding_wizard_page.dart';
 
 class SatechoApp extends StatelessWidget {
   const SatechoApp({this.initialRole, super.key});

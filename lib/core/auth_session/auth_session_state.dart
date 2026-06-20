@@ -1,4 +1,4 @@
-import '../../app/roles/user_role.dart';
+import 'package:satecho_mobile/app/roles/user_role.dart';
 
 class AuthSessionState {
   const AuthSessionState({
