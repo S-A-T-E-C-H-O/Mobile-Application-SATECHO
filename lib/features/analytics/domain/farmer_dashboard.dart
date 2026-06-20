@@ -1,6 +1,6 @@
-import '../../../irrigation/domain/entities/upcoming_irrigation.dart';
-import '../../../notifications/domain/entities/farm_alert.dart';
-import '../../../soil_monitoring/domain/entities/plot.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/upcoming_irrigation.dart';
+import 'package:satecho_mobile/features/notifications/domain/farm_alert.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
 import 'weather_summary.dart';
 
 class FarmerKpis {

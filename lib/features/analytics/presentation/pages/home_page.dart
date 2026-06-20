@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../../activity_log/presentation/pages/record_activity_page.dart';
-import '../../../devices/presentation/pages/device_status_page.dart';
-import '../../../irrigation/presentation/pages/irrigation_page.dart';
-import '../../../notifications/domain/value_objects/alert_severity.dart';
-import '../../domain/entities/farmer_dashboard.dart';
-import '../controllers/dashboard_controller.dart';
-import '../widgets/quick_action_card.dart';
-import '../widgets/weather_overview_card.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/activity_log/presentation/pages/record_activity_page.dart';
+import 'package:satecho_mobile/features/devices/presentation/pages/device_status_page.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
+import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
+import 'package:satecho_mobile/features/analytics/presentation/controllers/dashboard_controller.dart';
+import 'package:satecho_mobile/features/analytics/presentation/widgets/quick_action_card.dart';
+import 'package:satecho_mobile/features/analytics/presentation/widgets/weather_overview_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({required this.onOpenAlerts, super.key});
@@ -205,37 +205,37 @@ class _HomePageState extends State<HomePage> {
                         .asMap()
                         .entries
                         .expand((entry) => [
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: entry.value.highlighted
-                              ? const Color(0xFFDCE5F7)
-                              : AppColors.border,
-                          child: const Icon(Icons.schedule,
-                              color: AppColors.muted),
-                        ),
-                        title: Text(
-                          entry.value.plotName,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: AppColors.text,
-                          ),
-                        ),
-                        subtitle: Text(
-                          '${entry.value.scheduleLabel} \u2022 ${entry.value.durationMinutes} min',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.muted,
-                          ),
-                        ),
-                        trailing: const Icon(Icons.chevron_right,
-                            color: AppColors.border),
-                      ),
-                      if (entry.key !=
-                          dashboard.upcomingIrrigations.length - 1)
-                        const SizedBox(height: 18),
-                    ]),
+                              ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: entry.value.highlighted
+                                      ? const Color(0xFFDCE5F7)
+                                      : AppColors.border,
+                                  child: const Icon(Icons.schedule,
+                                      color: AppColors.muted),
+                                ),
+                                title: Text(
+                                  entry.value.plotName,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.text,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${entry.value.scheduleLabel} \u2022 ${entry.value.durationMinutes} min',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                                trailing: const Icon(Icons.chevron_right,
+                                    color: AppColors.border),
+                              ),
+                              if (entry.key !=
+                                  dashboard.upcomingIrrigations.length - 1)
+                                const SizedBox(height: 18),
+                            ]),
                   ],
                 ),
               ),
@@ -266,8 +266,8 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               '${dashboard.activeAlerts.where(
                                     (alert) =>
-                                alert.severity != AlertSeverity.info,
-                              ).length} active alerts',
+                                        alert.severity != AlertSeverity.info,
+                                  ).length} active alerts',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
