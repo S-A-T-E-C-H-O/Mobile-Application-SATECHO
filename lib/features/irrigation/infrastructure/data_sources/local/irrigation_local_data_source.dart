@@ -1,0 +1,3 @@
+class IrrigationLocalDataSource {
+  const IrrigationLocalDataSource();
+}
