@@ -1,0 +1,3 @@
+class LocalStoragePlaceholder {
+  const LocalStoragePlaceholder();
+}

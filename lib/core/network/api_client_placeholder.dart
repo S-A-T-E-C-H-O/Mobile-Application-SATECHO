@@ -1,0 +1,3 @@
+class ApiClientPlaceholder {
+  const ApiClientPlaceholder();
+}
