@@ -1,0 +1,3 @@
+class ZoneMapper {
+  const ZoneMapper();
+}
