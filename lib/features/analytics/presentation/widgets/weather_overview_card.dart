@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../../soil_monitoring/presentation/widgets/status_dot.dart';
-import '../../domain/entities/farmer_dashboard.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/soil_monitoring/presentation/widgets/status_dot.dart';
+import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
 
 class WeatherOverviewCard extends StatelessWidget {
   const WeatherOverviewCard({required this.dashboard, super.key});
@@ -31,7 +31,7 @@ class WeatherOverviewCard extends StatelessWidget {
               if (dashboard.weather.hasAlert)
                 Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: AppColors.dangerSoft,
                     borderRadius: BorderRadius.circular(16),
@@ -65,44 +65,44 @@ class WeatherOverviewCard extends StatelessWidget {
                   .asMap()
                   .entries
                   .expand((entry) => [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: AppColors.neutralTile,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StatusDot(status: entry.value.status),
-                        const SizedBox(height: 10),
-                        Text(
-                          _shortName(entry.value.name),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.muted,
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: AppColors.neutralTile,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                StatusDot(status: entry.value.status),
+                                const SizedBox(height: 10),
+                                Text(
+                                  _shortName(entry.value.name),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  '${entry.value.humidity ?? 0}%',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.text,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          '${entry.value.humidity ?? 0}%',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.text,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (entry.key != dashboard.plots.length - 1)
-                  const SizedBox(width: 14),
-              ]),
+                        if (entry.key != dashboard.plots.length - 1)
+                          const SizedBox(width: 14),
+                      ]),
             ],
           ),
         ],
