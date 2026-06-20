@@ -1,0 +1,3 @@
+class OnboardingLocalDataSource {
+  const OnboardingLocalDataSource();
+}

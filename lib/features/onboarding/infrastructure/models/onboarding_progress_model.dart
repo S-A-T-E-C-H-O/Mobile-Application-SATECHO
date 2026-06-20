@@ -1,0 +1,3 @@
+class OnboardingProgressModel {
+  const OnboardingProgressModel();
+}
