@@ -1,0 +1,3 @@
+class DashboardMapper {
+  const DashboardMapper();
+}
