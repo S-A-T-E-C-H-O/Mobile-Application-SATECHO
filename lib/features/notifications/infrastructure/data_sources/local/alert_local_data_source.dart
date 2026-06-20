@@ -1,0 +1,3 @@
+class AlertLocalDataSource {
+  const AlertLocalDataSource();
+}
