@@ -1,4 +1,4 @@
-import '../../domain/entities/irrigation_session.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
 
 class IrrigationSessionModel {
   const IrrigationSessionModel({

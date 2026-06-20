@@ -1,12 +1,12 @@
-import 'dart:async';
+﻿import 'dart:async';
 
-import '../../../../core/constants/api_constants.dart';
-import '../../../../core/network/api_client.dart';
-import '../../domain/entities/irrigation_session.dart';
-import '../../domain/entities/upcoming_irrigation.dart';
-import '../../domain/repositories/irrigation_repository.dart';
-import '../data_sources/remote/irrigation_remote_data_source.dart';
-import '../models/irrigation_session_model.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
+import 'package:satecho_mobile/features/irrigation/domain/upcoming_irrigation.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
+import 'package:satecho_mobile/features/irrigation/data/irrigation_remote_data_source.dart';
+import 'package:satecho_mobile/features/irrigation/data/irrigation_session_model.dart';
 
 class IrrigationRepositoryImpl implements IrrigationRepository {
   IrrigationRepositoryImpl(this._remote, this._client);

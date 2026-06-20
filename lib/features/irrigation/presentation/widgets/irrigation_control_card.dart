@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../../../core/presentation/widgets/app_card.dart';
-import '../../../soil_monitoring/domain/entities/plot.dart';
-import '../../../soil_monitoring/domain/entities/sensor_metric.dart';
-import '../../domain/entities/irrigation_session.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_session.dart';
 
 class IrrigationControlCard extends StatelessWidget {
   const IrrigationControlCard({

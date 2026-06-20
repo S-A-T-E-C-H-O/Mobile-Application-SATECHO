@@ -1,4 +1,4 @@
-import '../../domain/repositories/irrigation_repository.dart';
+﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
 
 class GetIrrigationHistory {
   const GetIrrigationHistory(this._repository);
