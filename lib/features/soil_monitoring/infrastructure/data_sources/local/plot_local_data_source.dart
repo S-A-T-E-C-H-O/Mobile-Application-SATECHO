@@ -1,0 +1,3 @@
+class PlotLocalDataSource {
+  const PlotLocalDataSource();
+}
