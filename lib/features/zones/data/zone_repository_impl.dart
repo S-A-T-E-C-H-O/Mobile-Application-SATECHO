@@ -1,8 +1,8 @@
-import '../../domain/entities/zone.dart';
-import '../../domain/entities/zone_metric.dart';
-import '../../domain/repositories/zone_repository.dart';
-import '../data_sources/remote/zone_remote_data_source.dart';
-import '../models/zone_model.dart';
+﻿import 'package:satecho_mobile/features/zones/domain/zone.dart';
+import 'package:satecho_mobile/features/zones/domain/zone_metric.dart';
+import 'package:satecho_mobile/features/zones/domain/zone_repository.dart';
+import 'package:satecho_mobile/features/zones/data/zone_remote_data_source.dart';
+import 'package:satecho_mobile/features/zones/data/zone_model.dart';
 
 class ZoneRepositoryImpl implements ZoneRepository {
   const ZoneRepositoryImpl(this._remote);

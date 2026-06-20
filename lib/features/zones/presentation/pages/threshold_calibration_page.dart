@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../controllers/zone_analysis_controller.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/zones/presentation/controllers/zone_analysis_controller.dart';
 import 'threshold_adjustment_page.dart';
 
 class ThresholdCalibrationPage extends StatefulWidget {

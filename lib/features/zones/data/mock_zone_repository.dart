@@ -1,6 +1,6 @@
-import '../../domain/entities/zone.dart';
-import '../../domain/entities/zone_metric.dart';
-import '../../domain/repositories/zone_repository.dart';
+﻿import 'package:satecho_mobile/features/zones/domain/zone.dart';
+import 'package:satecho_mobile/features/zones/domain/zone_metric.dart';
+import 'package:satecho_mobile/features/zones/domain/zone_repository.dart';
 
 class MockZoneRepository implements ZoneRepository {
   final List<Zone> _zones = const [

@@ -1,6 +1,6 @@
-import '../../../../../core/constants/api_constants.dart';
-import '../../../../../core/network/api_client.dart';
-import '../../models/zone_model.dart';
+﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/network/api_client.dart';
+import 'package:satecho_mobile/features/zones/data/zone_model.dart';
 
 class ZoneRemoteDataSource {
   const ZoneRemoteDataSource(this._client);

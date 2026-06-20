@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
 
 class ThresholdAdjustmentPage extends StatefulWidget {
   const ThresholdAdjustmentPage({

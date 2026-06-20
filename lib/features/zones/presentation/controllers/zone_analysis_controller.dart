@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../application/use_cases/get_zone_by_id.dart';
-import '../../domain/entities/zone.dart';
+import 'package:satecho_mobile/features/zones/domain/use_cases/get_zone_by_id.dart';
+import 'package:satecho_mobile/features/zones/domain/zone.dart';
 
 class ZoneAnalysisController extends ChangeNotifier {
   ZoneAnalysisController(this._getZoneById);

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../controllers/zone_analysis_controller.dart';
-import '../widgets/trend_chart_card.dart';
-import '../widgets/zone_metric_card.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/zones/presentation/controllers/zone_analysis_controller.dart';
+import 'package:satecho_mobile/features/zones/presentation/widgets/trend_chart_card.dart';
+import 'package:satecho_mobile/features/zones/presentation/widgets/zone_metric_card.dart';
 
 class ZoneAnalysisPage extends StatefulWidget {
   const ZoneAnalysisPage({required this.zoneId, super.key});
