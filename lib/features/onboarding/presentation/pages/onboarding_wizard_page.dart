@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../controllers/onboarding_wizard_controller.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/onboarding/presentation/controllers/onboarding_wizard_controller.dart';
 
 class OnboardingWizardPage extends StatefulWidget {
   const OnboardingWizardPage({required this.onCompleted, super.key});
@@ -335,7 +335,7 @@ class _WizardNav extends StatelessWidget {
               Expanded(
                 child: OutlinedButton(
                   onPressed:
-                  controller.isLoading ? null : controller.prevStep,
+                      controller.isLoading ? null : controller.prevStep,
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(48),
                     shape: RoundedRectangleBorder(
@@ -359,11 +359,11 @@ class _WizardNav extends StatelessWidget {
                 ),
                 child: controller.isLoading
                     ? const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                      strokeWidth: 2, color: Colors.white),
-                )
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
                     : Text(isLast ? 'Start monitoring' : 'Next'),
               ),
             ),
@@ -403,7 +403,7 @@ class _CropDropdownState extends State<_CropDropdown> {
             filled: true,
             fillColor: AppColors.surface,
             contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7),
               borderSide: const BorderSide(color: Color(0xFFD3D7D1)),
@@ -415,16 +415,16 @@ class _CropDropdownState extends State<_CropDropdown> {
           ),
           items: widget.controller.availableCropTypes
               .map((c) => DropdownMenuItem(
-            value: c,
-            child: Text(
-              c
-                  .split('_')
-                  .map((w) =>
-              w[0].toUpperCase() +
-                  w.substring(1).toLowerCase())
-                  .join(' '),
-            ),
-          ))
+                    value: c,
+                    child: Text(
+                      c
+                          .split('_')
+                          .map((w) =>
+                              w[0].toUpperCase() +
+                              w.substring(1).toLowerCase())
+                          .join(' '),
+                    ),
+                  ))
               .toList(),
           onChanged: (v) {
             setState(() => _selected = v);
@@ -476,7 +476,7 @@ class _Field extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7),
               borderSide:
-              const BorderSide(color: AppColors.primary),
+                  const BorderSide(color: AppColors.primary),
             ),
           ),
         ),

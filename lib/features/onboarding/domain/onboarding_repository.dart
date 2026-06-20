@@ -1,4 +1,4 @@
-import '../entities/onboarding_progress.dart';
+﻿import 'package:satecho_mobile/features/onboarding/domain/onboarding_progress.dart';
 
 abstract class OnboardingRepository {
   Future<OnboardingProgress> getProgress();
