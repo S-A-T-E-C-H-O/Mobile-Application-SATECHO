@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../application/use_cases/get_plots.dart';
-import '../../domain/entities/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/use_cases/get_plots.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
 
 class PlotsController extends ChangeNotifier {
   PlotsController(this._getPlots);

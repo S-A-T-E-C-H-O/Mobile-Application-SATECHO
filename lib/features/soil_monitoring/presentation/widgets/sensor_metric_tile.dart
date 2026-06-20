@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../domain/entities/sensor_metric.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
 
 class SensorMetricTile extends StatelessWidget {
   const SensorMetricTile({required this.metric, super.key});

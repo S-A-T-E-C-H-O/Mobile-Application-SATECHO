@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../domain/value_objects/plot_status.dart';
+import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot_status.dart';
 
 class StatusDot extends StatelessWidget {
   const StatusDot({required this.status, super.key});
