@@ -1,10 +1,10 @@
-import 'package:agrosafe/app.dart';
+import 'package:satecho_mobile/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('boots the application shell', (tester) async {
-    await tester.pumpWidget(const AgrosafeApp());
+    await tester.pumpWidget(const SatechoApp());
 
-    expect(find.byType(AgrosafeApp), findsOneWidget);
+    expect(find.byType(SatechoApp), findsOneWidget);
   });
 }
