@@ -1,5 +1,5 @@
-import '../../domain/entities/zone.dart';
-import '../../domain/repositories/zone_repository.dart';
+﻿import 'package:satecho_mobile/features/zones/domain/zone.dart';
+import 'package:satecho_mobile/features/zones/domain/zone_repository.dart';
 
 class GetZoneById {
   const GetZoneById(this._repository);

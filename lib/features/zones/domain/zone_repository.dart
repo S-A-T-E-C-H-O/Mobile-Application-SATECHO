@@ -1,4 +1,4 @@
-import '../entities/zone.dart';
+﻿import 'package:satecho_mobile/features/zones/domain/zone.dart';
 
 abstract class ZoneRepository {
   Future<List<Zone>> getZonesByFarm(String farmId);
