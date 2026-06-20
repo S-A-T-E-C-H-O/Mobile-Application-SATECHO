@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../../app/di/mock_dependencies.dart';
-import '../../../irrigation/presentation/pages/irrigation_page.dart';
-import '../controllers/alerts_controller.dart';
-import '../widgets/alert_card.dart';
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
+import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
+import 'package:satecho_mobile/features/notifications/presentation/controllers/alerts_controller.dart';
+import 'package:satecho_mobile/features/notifications/presentation/widgets/alert_card.dart';
 
 class AlertsPage extends StatefulWidget {
   const AlertsPage({super.key});

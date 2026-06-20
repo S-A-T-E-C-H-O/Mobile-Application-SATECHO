@@ -1,4 +1,4 @@
-import '../../domain/repositories/alert_repository.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
 
 class ResolveAlert {
   const ResolveAlert(this._repository);

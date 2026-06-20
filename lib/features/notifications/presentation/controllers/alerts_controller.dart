@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 
-import '../../application/use_cases/get_active_alerts.dart';
-import '../../application/use_cases/resolve_alert.dart';
-import '../../domain/entities/farm_alert.dart';
-import '../../domain/value_objects/alert_severity.dart';
+import 'package:satecho_mobile/features/notifications/domain/use_cases/get_active_alerts.dart';
+import 'package:satecho_mobile/features/notifications/domain/use_cases/resolve_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/farm_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
 
 class AlertsController extends ChangeNotifier {
   AlertsController(this._getActiveAlerts, this._resolveAlert);

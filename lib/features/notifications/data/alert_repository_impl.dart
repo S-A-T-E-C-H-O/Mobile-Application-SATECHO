@@ -1,6 +1,6 @@
-import '../../domain/entities/farm_alert.dart';
-import '../../domain/repositories/alert_repository.dart';
-import '../data_sources/remote/alert_remote_data_source.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/farm_alert.dart';
+import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
+import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart';
 
 class AlertRepositoryImpl implements AlertRepository {
   const AlertRepositoryImpl(this._remote);

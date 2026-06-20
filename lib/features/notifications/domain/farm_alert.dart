@@ -1,4 +1,4 @@
-import '../value_objects/alert_severity.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
 
 class FarmAlert {
   const FarmAlert({
