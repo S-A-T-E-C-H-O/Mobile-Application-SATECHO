@@ -1,0 +1,3 @@
+class DeviceLocalDataSource {
+  const DeviceLocalDataSource();
+}
