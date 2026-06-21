@@ -1,0 +1,3 @@
+class UserProfileLocalDataSource {
+  const UserProfileLocalDataSource();
+}
