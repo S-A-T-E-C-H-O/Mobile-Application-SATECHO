@@ -1,0 +1,3 @@
+class UserProfileMapper {
+  const UserProfileMapper();
+}
