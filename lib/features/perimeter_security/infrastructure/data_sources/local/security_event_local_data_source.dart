@@ -1,0 +1,3 @@
+class SecurityEventLocalDataSource {
+  const SecurityEventLocalDataSource();
+}
