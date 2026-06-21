@@ -1,0 +1,3 @@
+class SecurityEventMapper {
+  const SecurityEventMapper();
+}
