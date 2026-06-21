@@ -1,0 +1,3 @@
+class DeviceMapper {
+  const DeviceMapper();
+}
