@@ -1,0 +1,3 @@
+class FarmMapper {
+  const FarmMapper();
+}
