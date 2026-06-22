@@ -1,0 +1,3 @@
+class SubscriptionLocalDataSource {
+  const SubscriptionLocalDataSource();
+}
