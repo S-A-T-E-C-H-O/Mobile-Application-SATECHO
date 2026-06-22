@@ -1,0 +1,3 @@
+class FieldVisitMapper {
+  const FieldVisitMapper();
+}

@@ -1,0 +1,3 @@
+class FieldVisitModel {
+  const FieldVisitModel();
+}

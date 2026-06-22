@@ -1,0 +1,3 @@
+class FieldVisitLocalDataSource {
+  const FieldVisitLocalDataSource();
+}
