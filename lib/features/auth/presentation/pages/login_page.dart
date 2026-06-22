@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/roles/user_role.dart';
@@ -36,8 +36,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submit() async {
     final session = await _controller.login();
-    if (!mounted) return;
-    widget.onLoggedIn(session?.role ?? UserRole.farmer);
+    // Authentication is successful only when the backend returns a session.
+    // Do not use a fallback role here: that would let a failed sign-in enter
+    // the application as a farmer.
+    if (!mounted || session == null) return;
+    await widget.onLoggedIn(session.role);
   }
 
   @override
