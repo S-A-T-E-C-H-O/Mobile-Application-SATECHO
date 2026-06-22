@@ -1,0 +1,3 @@
+class QuickReportMapper {
+  const QuickReportMapper();
+}

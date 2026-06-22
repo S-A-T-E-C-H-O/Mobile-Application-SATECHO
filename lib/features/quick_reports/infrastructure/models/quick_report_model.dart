@@ -1,0 +1,3 @@
+class QuickReportModel {
+  const QuickReportModel();
+}
