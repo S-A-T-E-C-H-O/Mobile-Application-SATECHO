@@ -1,0 +1,3 @@
+class ActivityLocalDataSource {
+  const ActivityLocalDataSource();
+}
