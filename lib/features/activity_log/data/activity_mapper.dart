@@ -1,0 +1,3 @@
+class ActivityMapper {
+  const ActivityMapper();
+}
