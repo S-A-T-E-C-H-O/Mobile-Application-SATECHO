@@ -1,0 +1,3 @@
+class RecommendationLocalDataSource {
+  const RecommendationLocalDataSource();
+}

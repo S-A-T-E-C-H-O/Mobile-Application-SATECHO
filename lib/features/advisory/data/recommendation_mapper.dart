@@ -1,0 +1,3 @@
+class RecommendationMapper {
+  const RecommendationMapper();
+}
