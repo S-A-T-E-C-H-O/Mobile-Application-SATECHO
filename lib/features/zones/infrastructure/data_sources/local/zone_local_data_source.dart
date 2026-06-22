@@ -1,0 +1,3 @@
+class ZoneLocalDataSource {
+  const ZoneLocalDataSource();
+}
