@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -94,14 +94,48 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         const SizedBox(height: 16),
                         Text(
                           'Current plan',
-                          style:
-                              Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           _controller.subscription!.planName,
                           style: const TextStyle(
                               color: AppColors.muted, fontSize: 14),
+                        ),
+                        const SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: _controller.isMutating
+                                ? null
+                                : () async {
+                                    final confirmed = await showDialog<bool>(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title:
+                                            const Text('Cancel subscription?'),
+                                        content: const Text(
+                                            'Your plan stays active until the end of the current period, then downgrades to Free.'),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context)
+                                                      .pop(false),
+                                              child: const Text('Keep plan')),
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context)
+                                                      .pop(true),
+                                              child: const Text('Cancel plan')),
+                                        ],
+                                      ),
+                                    );
+                                    if (confirmed == true) {
+                                      await _controller.cancelSubscription();
+                                    }
+                                  },
+                            child: const Text('Cancel subscription'),
+                          ),
                         ),
                       ],
                     ),
@@ -143,14 +177,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             color: AppColors.muted, size: 40),
                         const SizedBox(height: 12),
                         Text('No active subscription',
-                            style:
-                                Theme.of(context).textTheme.titleMedium),
+                            style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: 8),
                         const Text(
                           'Contact your administrator to activate a plan.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: AppColors.muted, fontSize: 14),
+                          style:
+                              TextStyle(color: AppColors.muted, fontSize: 14),
                         ),
                       ],
                     ),
@@ -192,8 +225,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     '$currency $amount',
@@ -205,8 +237,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     Text(
                                       dueDate.substring(0, 10),
                                       style: const TextStyle(
-                                          color: AppColors.muted,
-                                          fontSize: 12),
+                                          color: AppColors.muted, fontSize: 12),
                                     ),
                                 ],
                               ),
@@ -244,15 +275,19 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   const SizedBox(height: 12),
                   ..._controller.plans.map((plan) {
                     final name = plan['name'] as String? ?? 'Plan';
-                    final price =
-                        (plan['price'] as num?)?.toStringAsFixed(2) ??
-                            (plan['pricePerHaPerMonth'] as num?)
-                                ?.toStringAsFixed(2) ??
-                            '--';
+                    final tier = plan['tier'] as String?;
+                    final price = (plan['price'] as num?)?.toStringAsFixed(2) ??
+                        (plan['pricePerHaPerMonth'] as num?)
+                            ?.toStringAsFixed(2) ??
+                        '--';
                     final features =
-                        (plan['features'] as List<dynamic>?)
-                            ?.cast<String>() ??
-                        const [];
+                        (plan['features'] as List<dynamic>?)?.cast<String>() ??
+                            const [];
+                    final isCurrentPlan = _controller.subscription != null &&
+                        tier != null &&
+                        _controller.subscription!.planName
+                            .toUpperCase()
+                            .contains(tier.toUpperCase());
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: AppCard(
@@ -280,7 +315,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                       child: Row(
                                         children: [
                                           const Icon(Icons.check_circle_outline,
-                                              color: AppColors.primary, size: 16),
+                                              color: AppColors.primary,
+                                              size: 16),
                                           const SizedBox(width: 8),
                                           Expanded(
                                               child: Text(f,
@@ -291,11 +327,34 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     ),
                                   ),
                             ],
+                            const SizedBox(height: 12),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: isCurrentPlan
+                                  ? const Chip(label: Text('Current plan'))
+                                  : FilledButton(
+                                      onPressed: tier == null ||
+                                              _controller.isMutating
+                                          ? null
+                                          : () => _controller.subscribe(tier),
+                                      style: FilledButton.styleFrom(
+                                          backgroundColor: AppColors.primary),
+                                      child: Text(
+                                          _controller.subscription == null
+                                              ? 'Select plan'
+                                              : 'Switch to this plan'),
+                                    ),
+                            ),
                           ],
                         ),
                       ),
                     );
                   }),
+                ],
+                if (_controller.errorMessage != null) ...[
+                  const SizedBox(height: 12),
+                  Text(_controller.errorMessage!,
+                      style: const TextStyle(color: AppColors.danger)),
                 ],
               ],
             ],
@@ -324,13 +383,13 @@ class _BenefitTile extends StatelessWidget {
         ListTile(
           leading: Icon(icon, color: AppColors.primary, size: 20),
           title: Text(label,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           trailing: const Icon(Icons.check, color: AppColors.primary, size: 18),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         ),
-        if (!isLast)
-          const Divider(height: 1, indent: 16, endIndent: 16),
+        if (!isLast) const Divider(height: 1, indent: 16, endIndent: 16),
       ],
     );
   }

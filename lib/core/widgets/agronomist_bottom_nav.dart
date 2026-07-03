@@ -50,8 +50,8 @@ class AgronomistBottomNav extends StatelessWidget {
             final badge = index == 1
                 ? pendingVisits
                 : index == 2
-                ? unreadAlerts
-                : 0;
+                    ? unreadAlerts
+                    : 0;
             return InkWell(
               borderRadius: BorderRadius.circular(36),
               onTap: () => onChanged(index),
@@ -60,9 +60,9 @@ class AgronomistBottomNav extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 decoration: selected
                     ? BoxDecoration(
-                  color: AppColors.primarySoft,
-                  borderRadius: BorderRadius.circular(34),
-                )
+                        color: AppColors.primarySoft,
+                        borderRadius: BorderRadius.circular(34),
+                      )
                     : null,
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -81,9 +81,9 @@ class AgronomistBottomNav extends StatelessWidget {
                           item.label,
                           style: TextStyle(
                             color:
-                            selected ? AppColors.primary : AppColors.muted,
+                                selected ? AppColors.primary : AppColors.muted,
                             fontWeight:
-                            selected ? FontWeight.w800 : FontWeight.w500,
+                                selected ? FontWeight.w800 : FontWeight.w500,
                             fontSize: 13,
                           ),
                         ),

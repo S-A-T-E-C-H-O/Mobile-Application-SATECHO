@@ -10,6 +10,10 @@ class FarmerKpis {
     required this.offlineDevices,
     required this.criticalAlerts,
     this.firstFarmName,
+    this.avgMoisture7d,
+    this.avgEc7d,
+    this.weeklyIrrigationHours,
+    this.criticalMoisture = false,
   });
 
   final int totalZones;
@@ -17,6 +21,10 @@ class FarmerKpis {
   final int offlineDevices;
   final int criticalAlerts;
   final String? firstFarmName;
+  final double? avgMoisture7d;
+  final double? avgEc7d;
+  final double? weeklyIrrigationHours;
+  final bool criticalMoisture;
 }
 
 class FarmerDashboard {

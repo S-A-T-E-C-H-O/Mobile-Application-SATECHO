@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
@@ -56,7 +56,8 @@ class RecommendationCard extends StatelessWidget {
             runSpacing: 8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const Icon(Icons.location_on_outlined, color: AppColors.muted, size: 18),
+              const Icon(Icons.location_on_outlined,
+                  color: AppColors.muted, size: 18),
               Text(
                 recommendation.plotName,
                 style: const TextStyle(fontSize: 13, color: AppColors.muted),

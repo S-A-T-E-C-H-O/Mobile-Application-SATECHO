@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
+import 'package:satecho_mobile/features/irrigation/domain/irrigation_repository.dart';
 import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
 import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
 import 'package:satecho_mobile/features/analytics/domain/farmer_dashboard.dart';
@@ -40,8 +40,8 @@ class DashboardRepositoryImpl implements DashboardRepository {
       // keep null if KPI fetch fails
     }
 
-    final farmName = kpis?.firstFarmName ??
-        (plots.isNotEmpty ? 'My Farm' : 'No farm');
+    final farmName =
+        kpis?.firstFarmName ?? (plots.isNotEmpty ? 'My Farm' : 'No farm');
 
     return FarmerDashboard(
       greeting: _greeting(),

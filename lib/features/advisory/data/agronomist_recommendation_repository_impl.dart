@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/features/advisory/domain/agronomist_recommendation.dart';
+import 'package:satecho_mobile/features/advisory/domain/agronomist_recommendation.dart';
 import 'package:satecho_mobile/features/advisory/domain/recommendation_draft.dart';
 import 'package:satecho_mobile/features/advisory/domain/agronomist_recommendation_repository.dart';
 import 'package:satecho_mobile/features/advisory/data/recommendation_remote_data_source.dart';
@@ -30,7 +30,22 @@ class AgronomistRecommendationRepositoryImpl
 
   @override
   Future<void> createRecommendation(RecommendationDraft draft) async {
-    // POST to recommendations endpoint with draft data
-    // The remote data source doesn't expose a create method yet — no-op for now.
+    final description = [
+      if (draft.product.isNotEmpty) 'Product/action: ${draft.product}',
+      if (draft.dose.isNotEmpty) 'Dose: ${draft.dose}',
+      if (draft.suggestedDate.isNotEmpty)
+        'Suggested date: ${draft.suggestedDate}',
+    ].join('. ');
+    // Backend only models MEDIUM/HIGH priority — the mobile wizard's "Low"
+    // option maps to MEDIUM since there's no lower tier server-side.
+    final priority = draft.priority.toUpperCase() == 'HIGH' ? 'HIGH' : 'MEDIUM';
+    await _remote.createRecommendation(
+      farmerId: draft.farmerId,
+      zoneId: int.tryParse(draft.zoneId),
+      title: draft.problem,
+      description: description.isEmpty ? draft.problem : description,
+      recommendedActions: draft.product.isEmpty ? null : draft.product,
+      priority: priority,
+    );
   }
 }

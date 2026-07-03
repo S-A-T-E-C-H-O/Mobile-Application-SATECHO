@@ -14,10 +14,19 @@ class FieldVisitRemoteDataSource {
         .toList();
   }
 
-  Future<void> completeVisit(String visitId) async {
+  Future<void> completeVisit(
+    String visitId, {
+    double? latitude,
+    double? longitude,
+    String? photoBase64,
+  }) async {
     await _client.post<void>(
       '${ApiConstants.agronomistVisits}/$visitId/complete',
-      data: null,
+      data: {
+        if (latitude != null) 'latitude': latitude,
+        if (longitude != null) 'longitude': longitude,
+        if (photoBase64 != null) 'photoBase64': photoBase64,
+      },
     );
   }
 

@@ -1,8 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:satecho_mobile/core/biometrics/biometric_auth_service.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/network/api_client.dart' show ApiClient;
+import 'package:satecho_mobile/core/notifications/notification_service.dart';
+import 'package:satecho_mobile/core/network/connectivity_service.dart';
+import 'package:satecho_mobile/core/realtime/mqtt_service.dart';
 import 'package:satecho_mobile/core/realtime/realtime_placeholder.dart';
+import 'package:satecho_mobile/core/storage/local_cache.dart';
 import 'package:satecho_mobile/core/storage/token_storage.dart';
 import 'package:satecho_mobile/features/activity_log/domain/use_cases/save_activity_offline.dart';
 import 'package:satecho_mobile/features/activity_log/domain/activity_repository.dart';
@@ -73,23 +79,41 @@ import 'package:satecho_mobile/features/irrigation/data/mock_irrigation_reposito
 import 'package:satecho_mobile/features/irrigation/presentation/controllers/irrigation_controller.dart';
 import 'package:satecho_mobile/features/notifications/domain/use_cases/get_active_alerts.dart';
 import 'package:satecho_mobile/features/notifications/domain/use_cases/get_agronomist_alerts.dart';
+import 'package:satecho_mobile/features/notifications/domain/use_cases/get_notifications.dart';
+import 'package:satecho_mobile/features/notifications/domain/use_cases/mark_notification_read.dart';
 import 'package:satecho_mobile/features/notifications/domain/use_cases/resolve_alert.dart';
 import 'package:satecho_mobile/features/notifications/domain/agronomist_alert_repository.dart';
 import 'package:satecho_mobile/features/notifications/domain/alert_repository.dart';
+import 'package:satecho_mobile/features/notifications/domain/notification_center_repository.dart';
 import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart';
 import 'package:satecho_mobile/features/notifications/data/alert_repository_impl.dart';
-import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart' show AlertRemoteDataSource;
+import 'package:satecho_mobile/features/notifications/data/alert_remote_data_source.dart'
+    show AlertRemoteDataSource;
 import 'package:satecho_mobile/features/notifications/data/agronomist_alert_repository_impl.dart';
+import 'package:satecho_mobile/features/notifications/data/device_token_remote_data_source.dart';
 import 'package:satecho_mobile/features/notifications/data/mock_agronomist_alert_repository.dart';
 import 'package:satecho_mobile/features/notifications/data/mock_alert_repository.dart';
+import 'package:satecho_mobile/features/notifications/data/mock_notification_center_repository.dart';
+import 'package:satecho_mobile/features/notifications/data/notification_center_repository_impl.dart';
 import 'package:satecho_mobile/features/notifications/presentation/controllers/agronomist_alerts_controller.dart';
 import 'package:satecho_mobile/features/notifications/presentation/controllers/alerts_controller.dart';
 import 'package:satecho_mobile/features/notifications/presentation/controllers/notification_preferences_controller.dart';
+import 'package:satecho_mobile/features/notifications/presentation/controllers/notifications_controller.dart';
 import 'package:satecho_mobile/features/onboarding/domain/onboarding_repository.dart';
 import 'package:satecho_mobile/features/onboarding/data/onboarding_remote_data_source.dart';
 import 'package:satecho_mobile/features/onboarding/data/mock_onboarding_repository.dart';
 import 'package:satecho_mobile/features/onboarding/data/onboarding_repository_impl.dart';
 import 'package:satecho_mobile/features/onboarding/presentation/controllers/onboarding_wizard_controller.dart';
+import 'package:satecho_mobile/features/parcel_comparison/domain/parcel_comparison_repository.dart';
+import 'package:satecho_mobile/features/parcel_comparison/domain/use_cases/compare_parcels.dart';
+import 'package:satecho_mobile/features/parcel_comparison/data/parcel_comparison_remote_data_source.dart';
+import 'package:satecho_mobile/features/parcel_comparison/data/parcel_comparison_repository_impl.dart';
+import 'package:satecho_mobile/features/parcel_comparison/data/mock_parcel_comparison_repository.dart';
+import 'package:satecho_mobile/features/priority_cases/domain/priority_cases_repository.dart';
+import 'package:satecho_mobile/features/priority_cases/domain/use_cases/get_priority_cases.dart';
+import 'package:satecho_mobile/features/priority_cases/data/priority_cases_remote_data_source.dart';
+import 'package:satecho_mobile/features/priority_cases/data/priority_cases_repository_impl.dart';
+import 'package:satecho_mobile/features/priority_cases/data/mock_priority_cases_repository.dart';
 import 'package:satecho_mobile/features/perimeter_security/application/uses_cases/get_security_events.dart';
 import 'package:satecho_mobile/features/perimeter_security/domain/repositories/security_event_repository.dart';
 import 'package:satecho_mobile/features/perimeter_security/infrastructure/data_sources/remote/security_event_remote_data_source.dart';
@@ -139,46 +163,52 @@ class AppDependencies {
         agronomistAlertRepository = MockAgronomistAlertRepository(),
         recommendationRepository = MockRecommendationRepository(),
         agronomistRecommendationRepository =
-        MockAgronomistRecommendationRepository(),
+            MockAgronomistRecommendationRepository(),
         activityRepository = MockActivityRepository(),
         userProfileRepository = MockUserProfileRepository(),
         agronomistProfileRepository = MockAgronomistProfileRepository(),
         deviceRepository = MockDeviceRepository(),
         subscriptionRepository = MockSubscriptionRepository(),
         securityEventRepository = MockSecurityEventRepository(),
+        notificationCenterRepository = MockNotificationCenterRepository(),
         onboardingRepository = MockOnboardingRepository(),
         fieldVisitRepository = MockFieldVisitRepository(),
         quickReportRepository = MockQuickReportRepository(),
+        priorityCasesRepository = MockPriorityCasesRepository(),
+        parcelComparisonRepository = MockParcelComparisonRepository(),
+        biometricService = BiometricAuthService(),
+        connectivity = ConnectivityService(),
+        localCache = const LocalCache(),
         _apiClient = null,
         _authRepository = null {
     farmRepository = MockFarmRepository(zoneRepository);
+    mqttService = null;
+    notificationService = null;
   }
 
   AppDependencies.real() : this._fromShared(_buildSharedInfra());
 
   AppDependencies._fromShared(_SharedInfra infra)
       : realtime = RealtimeService(),
-        plotRepository =
-        PlotRepositoryImpl(PlotRemoteDataSource(infra.client)),
-        zoneRepository =
-        ZoneRepositoryImpl(ZoneRemoteDataSource(infra.client)),
+        plotRepository = PlotRepositoryImpl(PlotRemoteDataSource(infra.client)),
+        zoneRepository = ZoneRepositoryImpl(ZoneRemoteDataSource(infra.client)),
         irrigationRepository = IrrigationRepositoryImpl(
           IrrigationRemoteDataSource(infra.client),
           infra.client,
         ),
         alertRepository =
-        AlertRepositoryImpl(AlertRemoteDataSource(infra.client)),
+            AlertRepositoryImpl(AlertRemoteDataSource(infra.client)),
         agronomistAlertRepository =
-        AgronomistAlertRepositoryImpl(AlertRemoteDataSource(infra.client)),
+            AgronomistAlertRepositoryImpl(AlertRemoteDataSource(infra.client)),
         recommendationRepository = RecommendationRepositoryImpl(
           RecommendationRemoteDataSource(infra.client),
         ),
         agronomistRecommendationRepository =
-        AgronomistRecommendationRepositoryImpl(
+            AgronomistRecommendationRepositoryImpl(
           RecommendationRemoteDataSource(infra.client),
         ),
         activityRepository =
-        ActivityRepositoryImpl(ActivityRemoteDataSource(infra.client)),
+            ActivityRepositoryImpl(ActivityRemoteDataSource(infra.client)),
         userProfileRepository = UserProfileRepositoryImpl(
           remote: UserProfileRemoteDataSource(infra.client),
           local: AuthLocalDataSource(infra.storage),
@@ -197,14 +227,25 @@ class AppDependencies {
           SecurityEventRemoteDataSource(infra.client),
           infra.client,
         ),
+        notificationCenterRepository = NotificationCenterRepositoryImpl(
+            AlertRemoteDataSource(infra.client)),
         onboardingRepository = OnboardingRepositoryImpl(
           OnboardingRemoteDataSource(infra.client),
         ),
         fieldVisitRepository =
-        FieldVisitRepositoryImpl(FieldVisitRemoteDataSource(infra.client)),
+            FieldVisitRepositoryImpl(FieldVisitRemoteDataSource(infra.client)),
         quickReportRepository = QuickReportRepositoryImpl(
           QuickReportRemoteDataSource(infra.client),
         ),
+        priorityCasesRepository = PriorityCasesRepositoryImpl(
+          PriorityCasesRemoteDataSource(infra.client),
+        ),
+        parcelComparisonRepository = ParcelComparisonRepositoryImpl(
+          ParcelComparisonRemoteDataSource(infra.client),
+        ),
+        biometricService = BiometricAuthService(),
+        connectivity = ConnectivityService(),
+        localCache = const LocalCache(),
         _apiClient = infra.client,
         _authRepository = AuthRepositoryImpl(
           remote: AuthRemoteDataSource(infra.client),
@@ -215,6 +256,14 @@ class AppDependencies {
       FarmRemoteDataSource(infra.client),
       zoneRemote,
     );
+    // Constructed but not connected here — MQTT I/O must not run as a side
+    // effect of building the dependency graph (breaks widget tests that pump
+    // the app without a live broker). The farmer shell connects it once the
+    // authenticated app is actually on screen.
+    mqttService = MqttService(realtime: realtime);
+    notificationService = NotificationService(
+      remote: DeviceTokenRemoteDataSource(infra.client),
+    )..initialize();
   }
 
   static _SharedInfra _buildSharedInfra() {
@@ -239,14 +288,25 @@ class AppDependencies {
   final DeviceRepository deviceRepository;
   final SubscriptionRepository subscriptionRepository;
   final SecurityEventRepository securityEventRepository;
+  final NotificationCenterRepository notificationCenterRepository;
   final OnboardingRepository onboardingRepository;
   final FieldVisitRepository fieldVisitRepository;
   final QuickReportRepository quickReportRepository;
+  final PriorityCasesRepository priorityCasesRepository;
+  final ParcelComparisonRepository parcelComparisonRepository;
+  late final MqttService? mqttService;
+  late final NotificationService? notificationService;
+  final BiometricAuthService biometricService;
+  final ConnectivityService connectivity;
+  final LocalCache localCache;
 
   final ApiClient? _apiClient;
   final AuthRepositoryImpl? _authRepository;
+  bool get hasAuthRepository => _authRepository != null;
+
   AuthRepositoryImpl get authRepository {
-    assert(_authRepository != null, 'authRepository only available in real mode');
+    assert(
+        _authRepository != null, 'authRepository only available in real mode');
     return _authRepository!;
   }
 
@@ -297,6 +357,18 @@ class AppDependencies {
 
   GetQuickReports get getQuickReports => GetQuickReports(quickReportRepository);
 
+  GetPriorityCases get getPriorityCases =>
+      GetPriorityCases(priorityCasesRepository);
+
+  /// The activity log feature talks to the API directly (no repository
+  /// abstraction) since it's a thin paginated read — see
+  /// ActivityLogListController. Null in mock mode; the controller shows an
+  /// empty list rather than making a real network call.
+  ApiClient? get activityLogClient => _apiClient;
+
+  CompareParcels get compareParcels =>
+      CompareParcels(parcelComparisonRepository);
+
   GetAllDevices get getAllDevices => GetAllDevices(deviceRepository);
 
   GetUserProfile get getUserProfile => GetUserProfile(userProfileRepository);
@@ -309,8 +381,18 @@ class AppDependencies {
       GetSecurityEvents(securityEventRepository);
 
   AuthController createAuthController() => AuthController(
-    authRepository: _authRepository,
-  );
+        authRepository: _authRepository,
+        notificationService: notificationService,
+        biometricService: biometricService,
+      );
+
+  GetNotifications get getNotifications =>
+      GetNotifications(notificationCenterRepository);
+  MarkNotificationRead get markNotificationRead =>
+      MarkNotificationRead(notificationCenterRepository);
+
+  NotificationsController createNotificationsController() =>
+      NotificationsController(getNotifications, markNotificationRead);
 
   VerifyEmailController createVerifyEmailController(String email) =>
       VerifyEmailController(
@@ -340,17 +422,18 @@ class AppDependencies {
     final client = _apiClient;
     final DashboardRepository dashRepo = _authRepository != null
         ? DashboardRepositoryImpl(
-      plotRepository: plotRepository,
-      irrigationRepository: irrigationRepository,
-      alertRepository: alertRepository,
-      remote: client != null ? DashboardRemoteDataSource(client) : null,
-    )
+            plotRepository: plotRepository,
+            irrigationRepository: irrigationRepository,
+            alertRepository: alertRepository,
+            remote: client != null ? DashboardRemoteDataSource(client) : null,
+          )
         : MockDashboardRepository(
-      plotRepository: plotRepository,
-      irrigationRepository: irrigationRepository,
-      alertRepository: alertRepository,
-    );
-    return DashboardController(GetFarmerDashboard(dashRepo));
+            plotRepository: plotRepository,
+            irrigationRepository: irrigationRepository,
+            alertRepository: alertRepository,
+          );
+    return DashboardController(GetFarmerDashboard(dashRepo),
+        connectivity: connectivity, localCache: localCache);
   }
 
   PlotsController createPlotsController() => PlotsController(getPlots);
@@ -364,8 +447,11 @@ class AppDependencies {
   EstateDetailController createEstateDetailController() =>
       EstateDetailController(getAssignedClientDetail);
 
-  ZoneAnalysisController createZoneAnalysisController() =>
-      ZoneAnalysisController(getZoneById);
+  ZoneAnalysisController createZoneAnalysisController() {
+    final client = _apiClient;
+    return ZoneAnalysisController(
+        getZoneById, client != null ? ZoneRemoteDataSource(client) : null);
+  }
 
   IrrigationController createIrrigationController() {
     return IrrigationController(
@@ -375,6 +461,8 @@ class AppDependencies {
       stopIrrigation: stopIrrigation,
       getHistory: getIrrigationHistory,
       realtime: realtime,
+      connectivity: connectivity,
+      localCache: localCache,
     );
   }
 
@@ -392,7 +480,8 @@ class AppDependencies {
   }
 
   NewRecommendationController createNewRecommendationController() =>
-      NewRecommendationController(createAgronomistRecommendation);
+      NewRecommendationController(
+          createAgronomistRecommendation, getAssignedClients);
 
   ActivityFlowController createActivityFlowController() =>
       ActivityFlowController(saveActivityOffline);
@@ -400,8 +489,8 @@ class AppDependencies {
   AgendaController createAgendaController() =>
       AgendaController(getScheduledVisits, fieldVisitRepository);
 
-  FieldVisitController createFieldVisitController() =>
-      FieldVisitController(saveFieldVisit);
+  FieldVisitController createFieldVisitController({required String visitId}) =>
+      FieldVisitController(saveFieldVisit, visitId: visitId);
 
   QuickReportsController createQuickReportsController() =>
       QuickReportsController(getQuickReports);
@@ -412,10 +501,48 @@ class AppDependencies {
   AgronomistProfileController createAgronomistProfileController() =>
       AgronomistProfileController(getAgronomistProfile);
 
+  /// EP-012-US024: raw PDF bytes for a zone's water-consumption report over
+  /// [fromDate]..[toDate], or null if there's no API client (mock mode) or
+  /// the request fails.
+  Future<List<int>?> getWaterConsumptionReportPdf(
+    String zoneId, {
+    required DateTime fromDate,
+    required DateTime toDate,
+  }) async {
+    final client = _apiClient;
+    if (client == null) return null;
+    try {
+      final response = await client.getBytes(
+        ApiConstants.waterConsumptionReport(zoneId),
+        queryParameters: {
+          'fromDate': fromDate.toUtc().toIso8601String(),
+          'toDate': toDate.toUtc().toIso8601String(),
+        },
+      );
+      return response.data;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// EP-013-US003 mobile export: raw CSV bytes for a farm's security events.
+  Future<List<int>?> getSecurityEventsCsv(String farmId) async {
+    final client = _apiClient;
+    if (client == null) return null;
+    try {
+      final response =
+          await client.getBytes(ApiConstants.securityEventsExport(farmId));
+      return response.data;
+    } catch (_) {
+      return null;
+    }
+  }
+
   PerimeterSecurityController createPerimeterSecurityController() {
     return PerimeterSecurityController(
       getSecurityEvents: getSecurityEvents,
       realtime: realtime,
+      exportCsv: securityEventRepository.exportCsv,
     );
   }
 }
@@ -437,7 +564,7 @@ class AppDependenciesScope extends InheritedWidget {
 
   static AppDependencies of(BuildContext context) {
     final element =
-    context.getElementForInheritedWidgetOfExactType<AppDependenciesScope>();
+        context.getElementForInheritedWidgetOfExactType<AppDependenciesScope>();
     final scope = element?.widget as AppDependenciesScope?;
     assert(scope != null, 'AppDependenciesScope not found');
     return scope!.dependencies;

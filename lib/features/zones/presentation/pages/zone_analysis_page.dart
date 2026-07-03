@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -17,7 +18,6 @@ class ZoneAnalysisPage extends StatefulWidget {
 
 class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
   late final ZoneAnalysisController _controller;
-  int _periodIndex = 1;
 
   @override
   void initState() {
@@ -31,6 +31,21 @@ class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  /// EP-009-US007 Scenario 2: export the currently loaded series as CSV.
+  Future<void> _exportCsv() async {
+    final buffer = StringBuffer('timestamp,metric,value\n');
+    for (final (metric, _, _) in ZoneAnalysisController.metrics) {
+      for (final point in _controller.series[metric] ?? const []) {
+        buffer.writeln(
+            '${point.timestamp.toIso8601String()},$metric,${point.value}');
+      }
+    }
+    await Share.share(
+      buffer.toString(),
+      subject: 'Zone ${widget.zoneId} trend export',
+    );
   }
 
   @override
@@ -69,14 +84,20 @@ class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                      radius: 6, backgroundColor: Color(0xFFC98366)),
+                  IconButton(
+                    tooltip: 'Export CSV',
+                    onPressed:
+                        _controller.series.values.any((s) => s.isNotEmpty)
+                            ? _exportCsv
+                            : null,
+                    icon: const Icon(Icons.ios_share),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
               _PeriodTabs(
-                  index: _periodIndex,
-                  onChanged: (i) => setState(() => _periodIndex = i)),
+                  index: _controller.periodIndex,
+                  onChanged: _controller.setPeriod),
               const SizedBox(height: 16),
               if (_controller.isLoading || zone == null)
                 const Center(child: CircularProgressIndicator())
@@ -94,23 +115,16 @@ class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
                   ],
                 ),
                 const SizedBox(height: 18),
-                const TrendChartCard(
-                    title: 'Humidity', color: AppColors.primary, rising: false),
-                const SizedBox(height: 18),
-                const TrendChartCard(
-                    title: 'Electrical Conductivity (EC)',
-                    color: AppColors.muted,
-                    rising: true),
-                const SizedBox(height: 18),
-                const TrendChartCard(
-                    title: 'Temperature',
-                    color: Color(0xFF9B5A3E),
-                    rising: true),
-                const SizedBox(height: 18),
-                const TrendChartCard(
-                    title: 'Rainfall (mm)',
-                    color: AppColors.info,
-                    rising: false),
+                for (final (metric, label, unit)
+                    in ZoneAnalysisController.metrics) ...[
+                  TrendChartCard(
+                    title: label,
+                    color: AppColors.primary,
+                    points: _controller.series[metric] ?? const [],
+                    unit: unit,
+                  ),
+                  const SizedBox(height: 18),
+                ],
               ],
             ],
           );
@@ -128,7 +142,7 @@ class _PeriodTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const labels = ['24h', '7d', '30d'];
+    const labels = ['24h', '7d', '30d', '90d'];
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(

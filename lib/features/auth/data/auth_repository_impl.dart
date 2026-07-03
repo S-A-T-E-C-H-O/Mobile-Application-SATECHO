@@ -33,12 +33,18 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
     List<String> roles = const ['ROLE_FARMER'],
+    String? registrationNumber,
+    String? specialty,
+    int? yearsOfExperience,
   }) async {
     await _remote.signUp(
       fullName: fullName,
       email: email,
       password: password,
       roles: roles,
+      registrationNumber: registrationNumber,
+      specialty: specialty,
+      yearsOfExperience: yearsOfExperience,
     );
   }
 
@@ -53,6 +59,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> forgotPassword({required String email}) async {
+    await _remote.forgotPassword(email: email);
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String token,
+    required String newPassword,
+  }) async {
+    await _remote.resetPassword(token: token, newPassword: newPassword);
+  }
+
+  @override
   Future<AuthSession?> restoreSession() async {
     final model = await _local.restoreSession();
     if (model == null) return null;
@@ -61,4 +80,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> clearSession() => _local.clearSession();
+
+  @override
+  Future<bool> isBiometricEnabled() => _local.isBiometricEnabled();
+
+  @override
+  Future<void> setBiometricEnabled(bool enabled) =>
+      _local.setBiometricEnabled(enabled);
 }

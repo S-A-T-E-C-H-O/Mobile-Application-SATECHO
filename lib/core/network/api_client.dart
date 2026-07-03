@@ -31,10 +31,22 @@ class ApiClient {
   late final Dio _dio;
 
   Future<Response<T>> get<T>(
-      String path, {
-        Map<String, dynamic>? queryParameters,
-      }) =>
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) =>
       _dio.get<T>(path, queryParameters: queryParameters);
+
+  /// For endpoints that return raw binary payloads (PDF/CSV downloads) rather
+  /// than JSON — e.g. water-consumption reports and security-event exports.
+  Future<Response<List<int>>> getBytes(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) =>
+      _dio.get<List<int>>(
+        path,
+        queryParameters: queryParameters,
+        options: Options(responseType: ResponseType.bytes),
+      );
 
   Future<Response<T>> post<T>(String path, {dynamic data}) =>
       _dio.post<T>(path, data: data);

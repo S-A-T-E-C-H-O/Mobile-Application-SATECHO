@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
@@ -53,8 +53,7 @@ class _InvoiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final amount =
-        (invoice['amount'] as num?)?.toStringAsFixed(2) ?? '--';
+    final amount = (invoice['amount'] as num?)?.toStringAsFixed(2) ?? '--';
     final currency = invoice['currency'] as String? ?? 'USD';
     final status = invoice['status'] as String? ?? '--';
     final description = invoice['description'] as String? ?? '';
@@ -109,8 +108,8 @@ class _InvoiceTile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: isPaid
                         ? const Color(0xFFE8F5E9)
@@ -138,8 +137,7 @@ class _InvoiceTile extends StatelessWidget {
                 children: [
                   if (dueDate != null) ...[
                     const Text('Due: ',
-                        style: TextStyle(
-                            color: AppColors.muted, fontSize: 12)),
+                        style: TextStyle(color: AppColors.muted, fontSize: 12)),
                     Text(dueDate.substring(0, 10),
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500)),
@@ -147,8 +145,7 @@ class _InvoiceTile extends StatelessWidget {
                   const Spacer(),
                   if (paidAt != null) ...[
                     const Text('Paid: ',
-                        style: TextStyle(
-                            color: AppColors.muted, fontSize: 12)),
+                        style: TextStyle(color: AppColors.muted, fontSize: 12)),
                     Text(paidAt.substring(0, 10),
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500)),

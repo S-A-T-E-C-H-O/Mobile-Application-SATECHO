@@ -23,4 +23,7 @@ class MockSecurityEventRepository implements SecurityEventRepository {
           classification: 'security_pir_status',
         ),
       ];
+
+  @override
+  Future<List<int>?> exportCsv() async => null;
 }

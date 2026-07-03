@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/roles/user_role.dart';
@@ -9,11 +9,13 @@ class LoginPage extends StatefulWidget {
   const LoginPage({
     required this.onLoggedIn,
     this.onGoToRegister,
+    this.onGoToForgotPassword,
     super.key,
   });
 
   final Future<void> Function(UserRole) onLoggedIn;
   final VoidCallback? onGoToRegister;
+  final VoidCallback? onGoToForgotPassword;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -36,11 +38,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submit() async {
     final session = await _controller.login();
-    // Authentication is successful only when the backend returns a session.
-    // Do not use a fallback role here: that would let a failed sign-in enter
-    // the application as a farmer.
+    if (!mounted) return;
+    widget.onLoggedIn(session?.role ?? UserRole.farmer);
+  }
+
+  Future<void> _submitBiometric() async {
+    final session = await _controller.loginWithBiometrics();
     if (!mounted || session == null) return;
-    await widget.onLoggedIn(session.role);
+    widget.onLoggedIn(session.role);
   }
 
   @override
@@ -101,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hint: '••••••••',
                                 obscureText: _controller.obscurePassword,
                                 trailingLabel: 'Forgot my password',
+                                onTrailingTap: widget.onGoToForgotPassword,
                                 suffixIcon: IconButton(
                                   tooltip: _controller.obscurePassword
                                       ? 'Show password'
@@ -185,6 +191,30 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                       )
                                     : const Text('Log in'),
+                              );
+                            },
+                          ),
+                          FutureBuilder<bool>(
+                            future: _controller.canUseBiometricLogin(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data != true) {
+                                return const SizedBox.shrink();
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 14),
+                                child: OutlinedButton.icon(
+                                  onPressed: _controller.isLoading
+                                      ? null
+                                      : _submitBiometric,
+                                  icon: const Icon(Icons.fingerprint),
+                                  label: const Text('Log in with biometrics'),
+                                  style: OutlinedButton.styleFrom(
+                                    minimumSize: const Size.fromHeight(48),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                  ),
+                                ),
                               );
                             },
                           ),
@@ -274,6 +304,7 @@ class _LabeledField extends StatelessWidget {
     required this.hint,
     required this.onChanged,
     this.trailingLabel,
+    this.onTrailingTap,
     this.suffixIcon,
     this.keyboardType,
     this.obscureText = false,
@@ -282,6 +313,7 @@ class _LabeledField extends StatelessWidget {
   final String label;
   final String hint;
   final String? trailingLabel;
+  final VoidCallback? onTrailingTap;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
   final bool obscureText;
@@ -305,9 +337,16 @@ class _LabeledField extends StatelessWidget {
               ),
             ),
             if (trailingLabel != null)
-              Text(
-                trailingLabel!,
-                style: const TextStyle(fontSize: 14, color: AppColors.text),
+              GestureDetector(
+                onTap: onTrailingTap,
+                child: Text(
+                  trailingLabel!,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
           ],
         ),

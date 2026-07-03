@@ -29,21 +29,18 @@ class RealtimeService {
   RealtimeService();
 
   final StreamController<RealtimeEvent> _controller =
-  StreamController<RealtimeEvent>.broadcast();
+      StreamController<RealtimeEvent>.broadcast();
 
   Stream<RealtimeEvent> get events => _controller.stream;
 
   Stream<RealtimeEvent> securityEvents() =>
       events.where((e) => e.type == RealtimeEventType.securityPirStatus);
 
-  Stream<RealtimeEvent> irrigationStatus(String zoneId) =>
-      events.where((e) =>
-      e.type == RealtimeEventType.irrigationStatus &&
-          e.zoneId == zoneId);
+  Stream<RealtimeEvent> irrigationStatus(String zoneId) => events.where((e) =>
+      e.type == RealtimeEventType.irrigationStatus && e.zoneId == zoneId);
 
-  Stream<RealtimeEvent> sensorReadings(String zoneId) =>
-      events.where((e) =>
-      e.type == RealtimeEventType.sensorReading && e.zoneId == zoneId);
+  Stream<RealtimeEvent> sensorReadings(String zoneId) => events.where(
+      (e) => e.type == RealtimeEventType.sensorReading && e.zoneId == zoneId);
 
   void emit(RealtimeEvent event) {
     if (!_controller.isClosed) {

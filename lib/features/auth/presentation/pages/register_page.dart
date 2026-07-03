@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -150,6 +150,40 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: _controller.updateSelectedRole,
                             ),
                           ),
+                          AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, _) {
+                              if (!_controller.isAgronomistRole) {
+                                return const SizedBox.shrink();
+                              }
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const SizedBox(height: 18),
+                                  _LabeledField(
+                                    label: 'Professional registration number',
+                                    hint: 'CIP-12345',
+                                    onChanged:
+                                        _controller.updateRegistrationNumber,
+                                  ),
+                                  const SizedBox(height: 18),
+                                  _LabeledField(
+                                    label: 'Specialty',
+                                    hint: 'Irrigation, soil science, ...',
+                                    onChanged: _controller.updateSpecialty,
+                                  ),
+                                  const SizedBox(height: 18),
+                                  _LabeledField(
+                                    label: 'Years of experience',
+                                    hint: '5',
+                                    keyboardType: TextInputType.number,
+                                    onChanged:
+                                        _controller.updateYearsOfExperience,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                           const SizedBox(height: 26),
                           AnimatedBuilder(
                             animation: _controller,
@@ -173,8 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           AnimatedBuilder(
                             animation: _controller,
                             builder: (context, _) => FilledButton(
-                              onPressed:
-                                  _controller.isLoading ? null : _submit,
+                              onPressed: _controller.isLoading ? null : _submit,
                               style: FilledButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 minimumSize: const Size.fromHeight(48),

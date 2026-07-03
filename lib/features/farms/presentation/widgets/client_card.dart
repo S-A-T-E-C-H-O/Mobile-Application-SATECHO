@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
@@ -139,7 +139,8 @@ class _ClientMetric extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Icon(icon, color: danger ? AppColors.danger : AppColors.muted, size: 20),
+          Icon(icon,
+              color: danger ? AppColors.danger : AppColors.muted, size: 20),
           const SizedBox(height: 4),
           Text(
             value,

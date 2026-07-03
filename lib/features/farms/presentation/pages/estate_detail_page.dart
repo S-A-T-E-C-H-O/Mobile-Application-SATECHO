@@ -4,7 +4,7 @@ import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
 import 'package:satecho_mobile/features/advisory/presentation/pages/new_recommendation_page.dart';
-import 'package:satecho_mobile/features/field_visits/presentation/pages/field_visit_page.dart';
+import 'package:satecho_mobile/features/field_visits/presentation/pages/agenda_page.dart';
 import 'package:satecho_mobile/features/quick_reports/presentation/pages/quick_reports_page.dart';
 import 'package:satecho_mobile/features/zones/presentation/pages/threshold_adjustment_page.dart';
 import 'package:satecho_mobile/features/zones/presentation/pages/zone_analysis_page.dart';
@@ -88,7 +88,7 @@ class _EstateDetailPageState extends State<EstateDetailPage> {
                             child: FilledButton.icon(
                               onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (_) => const FieldVisitPage()),
+                                    builder: (_) => const AgendaPage()),
                               ),
                               icon: const Icon(Icons.event_available),
                               label: const Text('Schedule a visit'),

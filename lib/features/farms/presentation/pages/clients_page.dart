@@ -4,6 +4,8 @@ import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/features/farms/presentation/controllers/clients_controller.dart';
 import 'package:satecho_mobile/features/farms/presentation/widgets/client_card.dart';
+import 'package:satecho_mobile/features/parcel_comparison/presentation/pages/parcel_comparison_page.dart';
+import 'package:satecho_mobile/features/priority_cases/presentation/pages/priority_cases_page.dart';
 import 'agronomist_filters_page.dart';
 import 'estate_detail_page.dart';
 
@@ -52,6 +54,39 @@ class _ClientsPageState extends State<ClientsPage> {
               style: TextStyle(color: AppColors.muted, fontSize: 16),
             ),
             const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (_) => const PriorityCasesPage()),
+                    ),
+                    icon: const Icon(Icons.priority_high,
+                        color: AppColors.danger),
+                    label: const Text('Priority cases'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(44),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (_) => const ParcelComparisonPage()),
+                    ),
+                    icon: const Icon(Icons.compare_arrows),
+                    label: const Text('Compare'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(44),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 const Text('Clients',

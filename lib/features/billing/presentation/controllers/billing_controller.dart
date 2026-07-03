@@ -1,11 +1,12 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:satecho_mobile/features/billing/domain/use_cases/get_current_subscription.dart';
 import 'package:satecho_mobile/features/billing/domain/subscription.dart';
 import 'package:satecho_mobile/features/billing/data/subscription_remote_data_source.dart';
 
 class BillingController extends ChangeNotifier {
-  BillingController(this._getSubscription, {SubscriptionRemoteDataSource? remote})
+  BillingController(this._getSubscription,
+      {SubscriptionRemoteDataSource? remote})
       : _remote = remote;
 
   final GetCurrentSubscription _getSubscription;
@@ -41,6 +42,34 @@ class BillingController extends ChangeNotifier {
       _errorMessage = e.toString().replaceFirst('Exception: ', '');
     } finally {
       _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  bool _isMutating = false;
+  bool get isMutating => _isMutating;
+
+  Future<bool> subscribe(String planTier) => _mutate(
+        () => _remote?.subscribe(planTier) ?? Future.value(),
+      );
+
+  Future<bool> cancelSubscription() => _mutate(
+        () => _remote?.cancel() ?? Future.value(),
+      );
+
+  Future<bool> _mutate(Future<void> Function() action) async {
+    _isMutating = true;
+    _errorMessage = null;
+    notifyListeners();
+    try {
+      await action();
+      await load();
+      return true;
+    } on Exception catch (e) {
+      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      return false;
+    } finally {
+      _isMutating = false;
       notifyListeners();
     }
   }

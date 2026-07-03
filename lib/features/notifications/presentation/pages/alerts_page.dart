@@ -1,8 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
 import 'package:satecho_mobile/features/notifications/presentation/controllers/alerts_controller.dart';
+import 'package:satecho_mobile/features/notifications/presentation/pages/notifications_screen.dart';
 import 'package:satecho_mobile/features/notifications/presentation/widgets/alert_card.dart';
 
 class AlertsPage extends StatefulWidget {
@@ -38,7 +39,21 @@ class _AlertsPageState extends State<AlertsPage> {
           padding: EdgeInsets.fromLTRB(
               20, mq.padding.top + 16, 20, mq.padding.bottom + 80),
           children: [
-            Text('Alerts', style: Theme.of(context).textTheme.headlineLarge),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Alerts',
+                    style: Theme.of(context).textTheme.headlineLarge),
+                IconButton(
+                  icon: const Icon(Icons.history),
+                  tooltip: 'Notification history',
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) => const NotificationsScreen()),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 34),
             if (_controller.isLoading)
               const Center(child: CircularProgressIndicator())

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -19,6 +19,7 @@ class _NewRecommendationPageState extends State<NewRecommendationPage> {
     super.initState();
     controller =
         AppDependenciesScope.of(context).createNewRecommendationController();
+    controller.loadClients();
   }
 
   @override
@@ -135,21 +136,37 @@ class _PlotStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (controller.loadingClients) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    final farmerIdByZoneId = <String, int>{};
+    final entries = <(String, String, String)>[];
+    for (final client in controller.clients) {
+      final farmerId = int.tryParse(client.farm.id);
+      if (farmerId == null) continue;
+      for (final zone in client.zones) {
+        farmerIdByZoneId[zone.id] = farmerId;
+        entries.add((
+          zone.id,
+          '${zone.name} — ${client.farm.ownerName}',
+          '${zone.areaLabel} · Hum: ${zone.humidity}%'
+        ));
+      }
+    }
+    if (entries.isEmpty) {
+      return const Center(child: Text('No assigned client parcels found'));
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Select the plot', style: TextStyle(fontSize: 20)),
         const SizedBox(height: 18),
-        for (final zone in const [
-          ('R1', 'Sector A', '140 ha · Hum: 38%', AppColors.danger),
-          ('R2', 'Sector B', '140 ha · Hum: 52%', Color(0xFFC98366)),
-          ('R3', 'Sector C', '130 ha · Hum: 63%', AppColors.primary),
-        ])
+        for (final entry in entries)
           _OptionCard(
-            title: zone.$2,
-            subtitle: zone.$3,
-            dotColor: zone.$4,
-            onTap: () => controller.selectZone(zone.$1),
+            title: entry.$2,
+            subtitle: entry.$3,
+            onTap: () =>
+                controller.selectZone(entry.$1, farmerIdByZoneId[entry.$1]!),
           ),
       ],
     );

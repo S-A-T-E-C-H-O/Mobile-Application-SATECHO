@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/features/advisory/presentation/controllers/recommendations_controller.dart';
@@ -57,7 +57,8 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                     padding: const EdgeInsets.only(bottom: 22),
                     child: RecommendationCard(
                       recommendation: recommendation,
-                      onCompleted: () => _controller.complete(recommendation.id),
+                      onCompleted: () =>
+                          _controller.complete(recommendation.id),
                     ),
                   ),
                 ),

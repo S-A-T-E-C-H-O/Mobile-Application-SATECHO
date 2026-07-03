@@ -9,6 +9,7 @@ class TokenStorage {
 
   static const _tokenKey = 'auth_token';
   static const _sessionKey = 'auth_session_meta';
+  static const _biometricEnabledKey = 'biometric_login_enabled';
 
   Future<void> saveToken(String token) =>
       _storage.write(key: _tokenKey, value: token);
@@ -24,8 +25,18 @@ class TokenStorage {
     return jsonDecode(raw) as Map<String, dynamic>;
   }
 
+  Future<void> saveBiometricEnabled(bool enabled) =>
+      _storage.write(key: _biometricEnabledKey, value: enabled.toString());
+
+  Future<bool> readBiometricEnabled() async {
+    final raw = await _storage.read(key: _biometricEnabledKey);
+    return raw == 'true';
+  }
+
   Future<void> clear() async {
     await _storage.delete(key: _tokenKey);
     await _storage.delete(key: _sessionKey);
+    // Biometric preference intentionally survives sign-out so the toggle
+    // doesn't reset every time a farmer switches accounts on a shared device.
   }
 }

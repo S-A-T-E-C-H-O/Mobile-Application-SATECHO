@@ -1,5 +1,6 @@
 class RecommendationDraft {
   const RecommendationDraft({
+    required this.farmerId,
     required this.zoneId,
     required this.problem,
     required this.product,
@@ -8,6 +9,7 @@ class RecommendationDraft {
     required this.priority,
   });
 
+  final int farmerId;
   final String zoneId;
   final String problem;
   final String product;

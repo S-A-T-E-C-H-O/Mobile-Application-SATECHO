@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
@@ -70,9 +70,8 @@ class IrrigationControlCard extends StatelessWidget {
                   width: buttonSize,
                   height: buttonSize,
                   decoration: BoxDecoration(
-                    color: isRunning
-                        ? AppColors.danger
-                        : const Color(0xFF07AF73),
+                    color:
+                        isRunning ? AppColors.danger : const Color(0xFF07AF73),
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 5),
                     boxShadow: [

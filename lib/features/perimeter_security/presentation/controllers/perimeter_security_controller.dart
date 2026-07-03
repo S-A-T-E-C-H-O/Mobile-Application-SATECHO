@@ -10,11 +10,16 @@ class PerimeterSecurityController extends ChangeNotifier {
   PerimeterSecurityController({
     required GetSecurityEvents getSecurityEvents,
     RealtimeService? realtime,
+    Future<List<int>?> Function()? exportCsv,
   })  : _getSecurityEvents = getSecurityEvents,
-        _realtime = realtime;
+        _realtime = realtime,
+        _exportCsv = exportCsv;
 
   final GetSecurityEvents _getSecurityEvents;
   final RealtimeService? _realtime;
+  final Future<List<int>?> Function()? _exportCsv;
+
+  Future<List<int>?> exportCsv() async => _exportCsv?.call();
 
   StreamSubscription<RealtimeEvent>? _securitySub;
 

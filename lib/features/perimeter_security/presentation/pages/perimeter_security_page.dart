@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -15,12 +18,32 @@ class PerimeterSecurityPage extends StatefulWidget {
 
 class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
   late final PerimeterSecurityController _controller;
+  String? _classificationFilter;
+  bool _exporting = false;
+
+  Future<void> _exportCsv() async {
+    setState(() => _exporting = true);
+    try {
+      final bytes = await _controller.exportCsv();
+      if (bytes == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not export security events')),
+          );
+        }
+        return;
+      }
+      await Share.share(utf8.decode(bytes), subject: 'Security events export');
+    } finally {
+      if (mounted) setState(() => _exporting = false);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _controller = AppDependenciesScope.of(context)
-        .createPerimeterSecurityController();
+    _controller =
+        AppDependenciesScope.of(context).createPerimeterSecurityController();
     _controller.load();
   }
 
@@ -36,12 +59,15 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
       animation: _controller,
       builder: (context, _) {
         final mq = MediaQuery.of(context);
-        final pirEvents = _controller.events
-            .where((e) => e.classification == 'security_pir_status')
-            .toList();
-        final otherEvents = _controller.events
-            .where((e) => e.classification != 'security_pir_status')
-            .toList();
+        final filtered = _classificationFilter == null
+            ? _controller.events
+            : _controller.events
+                .where((e) => e.classification == _classificationFilter)
+                .toList();
+        final personEvents =
+            filtered.where((e) => e.classification == 'PERSON').toList();
+        final otherEvents =
+            filtered.where((e) => e.classification != 'PERSON').toList();
         return ListView(
           padding: EdgeInsets.fromLTRB(
               20, mq.padding.top + 16, 20, mq.padding.bottom + 80),
@@ -51,6 +77,16 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
                 Expanded(
                   child: Text('Perimeter Security',
                       style: Theme.of(context).textTheme.headlineLarge),
+                ),
+                IconButton(
+                  tooltip: 'Export CSV',
+                  onPressed: _exporting ? null : _exportCsv,
+                  icon: _exporting
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Icon(Icons.ios_share, color: AppColors.muted),
                 ),
                 IconButton(
                   tooltip: 'Security settings',
@@ -64,19 +100,38 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 34),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 8,
+              children: [
+                ChoiceChip(
+                  label: const Text('All'),
+                  selected: _classificationFilter == null,
+                  onSelected: (_) =>
+                      setState(() => _classificationFilter = null),
+                ),
+                for (final c in const ['PERSON', 'ANIMAL', 'WIND'])
+                  ChoiceChip(
+                    label: Text(c),
+                    selected: _classificationFilter == c,
+                    onSelected: (_) =>
+                        setState(() => _classificationFilter = c),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 24),
             if (_controller.isLoading)
               const Center(child: CircularProgressIndicator())
-            else if (_controller.events.isEmpty)
+            else if (filtered.isEmpty)
               const Text('No security events')
             else ...[
-              if (pirEvents.isNotEmpty) ...[
+              if (personEvents.isNotEmpty) ...[
                 const _SectionHeader(
                   label: 'PIR MOVEMENT DETECTIONS',
                   color: AppColors.danger,
                 ),
                 const SizedBox(height: 12),
-                ...pirEvents.map((event) => Padding(
+                ...personEvents.map((event) => Padding(
                       padding: const EdgeInsets.only(bottom: 14),
                       child: _SecurityEventCard(event: event),
                     )),
@@ -134,7 +189,7 @@ class _SecurityEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPir = event.classification == 'security_pir_status';
+    final isPir = event.classification == 'PERSON';
     return AppCard(
       border: Border(
         left: BorderSide(

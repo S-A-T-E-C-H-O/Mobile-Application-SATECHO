@@ -3,9 +3,8 @@ import '../../domain/repositories/device_repository.dart';
 
 class MockDeviceRepository implements DeviceRepository {
   @override
-  Future<List<Device>> getDevicesByPlot(String plotId) async => _mockDevices
-      .where((d) => d.plotId == plotId)
-      .toList();
+  Future<List<Device>> getDevicesByPlot(String plotId) async =>
+      _mockDevices.where((d) => d.plotId == plotId).toList();
 
   @override
   Future<List<Device>> getAllDevices() async => _mockDevices;

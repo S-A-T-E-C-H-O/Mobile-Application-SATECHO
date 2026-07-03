@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 
 import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/network/api_client.dart';
@@ -73,9 +73,8 @@ class IrrigationRepositoryImpl implements IrrigationRepository {
       }
     }));
 
-    final result = scheduleResults
-        .expand((irrigations) => irrigations)
-        .toList();
+    final result =
+        scheduleResults.expand((irrigations) => irrigations).toList();
 
     if (result.isNotEmpty) {
       result[0] = result[0].copyWith(highlighted: true);

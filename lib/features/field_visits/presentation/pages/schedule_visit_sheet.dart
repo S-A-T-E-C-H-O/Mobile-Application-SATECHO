@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/features/field_visits/presentation/controllers/agenda_controller.dart';
@@ -47,7 +47,9 @@ class _ScheduleVisitSheetState extends State<ScheduleVisitSheet> {
     if (!mounted) return;
     setState(() {
       _scheduledAt = DateTime(
-        picked.year, picked.month, picked.day,
+        picked.year,
+        picked.month,
+        picked.day,
         time?.hour ?? _scheduledAt.hour,
         time?.minute ?? _scheduledAt.minute,
       );
@@ -68,7 +70,9 @@ class _ScheduleVisitSheetState extends State<ScheduleVisitSheet> {
     final ok = await widget.controller.scheduleVisit(
       farmId: farmId,
       scheduledAt: _scheduledAt,
-      tag: _tagController.text.trim().isEmpty ? 'Visit' : _tagController.text.trim(),
+      tag: _tagController.text.trim().isEmpty
+          ? 'Visit'
+          : _tagController.text.trim(),
       noteTitle: _noteTitleController.text.trim(),
       noteBody: _noteBodyController.text.trim(),
       urgent: _urgent,
@@ -141,8 +145,8 @@ class _ScheduleVisitSheetState extends State<ScheduleVisitSheet> {
             GestureDetector(
               onTap: _pickDate,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   border: Border.all(color: const Color(0xFFD3D7D1)),
@@ -169,16 +173,16 @@ class _ScheduleVisitSheetState extends State<ScheduleVisitSheet> {
             SwitchListTile.adaptive(
               value: _urgent,
               onChanged: (v) => setState(() => _urgent = v),
-              title: const Text('Mark as urgent',
-                  style: TextStyle(fontSize: 14)),
+              title:
+                  const Text('Mark as urgent', style: TextStyle(fontSize: 14)),
               activeColor: AppColors.primary,
               contentPadding: EdgeInsets.zero,
             ),
             if (_errorMessage != null) ...[
               const SizedBox(height: 8),
               Text(_errorMessage!,
-                  style: const TextStyle(
-                      color: AppColors.danger, fontSize: 13)),
+                  style:
+                      const TextStyle(color: AppColors.danger, fontSize: 13)),
             ],
             const SizedBox(height: 16),
             FilledButton(

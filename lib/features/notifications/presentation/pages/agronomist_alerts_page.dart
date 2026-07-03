@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -59,8 +59,8 @@ class _AgronomistAlertsPageState extends State<AgronomistAlertsPage> {
                   label: 'CRITICAL (${critical.length})',
                   color: AppColors.danger,
                   icon: Icons.error),
-              ...critical.map(
-                  (alert) => _AgronomistAlertCard(alert: alert, critical: true)),
+              ...critical.map((alert) =>
+                  _AgronomistAlertCard(alert: alert, critical: true)),
               const SizedBox(height: 18),
               _SectionTitle(
                   label: 'ATENCI\u00D3N (${attention.length + 2})',

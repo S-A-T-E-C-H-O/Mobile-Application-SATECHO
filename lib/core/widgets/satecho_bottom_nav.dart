@@ -52,9 +52,9 @@ class SatechoBottomNav extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 decoration: selected
                     ? BoxDecoration(
-                  color: AppColors.primarySoft,
-                  borderRadius: BorderRadius.circular(36),
-                )
+                        color: AppColors.primarySoft,
+                        borderRadius: BorderRadius.circular(36),
+                      )
                     : null,
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -73,9 +73,9 @@ class SatechoBottomNav extends StatelessWidget {
                           item.label,
                           style: TextStyle(
                             color:
-                            selected ? AppColors.primary : AppColors.muted,
+                                selected ? AppColors.primary : AppColors.muted,
                             fontWeight:
-                            selected ? FontWeight.w800 : FontWeight.w500,
+                                selected ? FontWeight.w800 : FontWeight.w500,
                             fontSize: 14,
                           ),
                         ),

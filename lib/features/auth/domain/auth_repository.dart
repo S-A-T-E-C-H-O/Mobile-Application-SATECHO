@@ -9,7 +9,17 @@ abstract class AuthRepository {
     required String email,
     required String password,
     List<String> roles,
+    String? registrationNumber,
+    String? specialty,
+    int? yearsOfExperience,
   });
   Future<void> verifyAccount({required String token});
   Future<void> resendVerification({required String email});
+  Future<void> forgotPassword({required String email});
+  Future<void> resetPassword({
+    required String token,
+    required String newPassword,
+  });
+  Future<bool> isBiometricEnabled();
+  Future<void> setBiometricEnabled(bool enabled);
 }

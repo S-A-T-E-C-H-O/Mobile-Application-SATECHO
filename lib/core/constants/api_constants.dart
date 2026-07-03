@@ -1,7 +1,8 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String baseUrl = 'http://agrosafe-back.eastus2.azurecontainer.io:8080';
+  static const String baseUrl =
+      'http://agrosafe-back.eastus2.azurecontainer.io:8080';
 
   // Auth
   static const String signIn = '/api/v1/authentication/sign-in';
@@ -9,9 +10,12 @@ class ApiConstants {
   static const String verifyAccount = '/api/v1/authentication/verify-account';
   static const String resendVerification =
       '/api/v1/authentication/resend-verification';
+  static const String forgotPassword = '/api/v1/authentication/forgot-password';
+  static const String resetPassword = '/api/v1/authentication/reset-password';
 
   // Me
   static const String me = '/api/v1/me';
+  static const String changePassword = '/api/v1/me/change-password';
 
   // Farms & Zones
   static const String farms = '/api/v1/farms';
@@ -58,6 +62,7 @@ class ApiConstants {
   static String notification(String id) => '/api/v1/notifications/$id';
   static const String notificationPreferences =
       '/api/v1/notifications/preferences';
+  static const String deviceTokens = '/api/v1/notifications/device-tokens';
 
   // Recommendations
   static const String recommendations = '/api/v1/recommendations';
@@ -71,8 +76,7 @@ class ApiConstants {
   static const String devices = '/api/v1/devices';
   static String device(String id) => '/api/v1/devices/$id';
   static String deviceActivate(String id) => '/api/v1/devices/$id/activate';
-  static String deviceDeactivate(String id) =>
-      '/api/v1/devices/$id/deactivate';
+  static String deviceDeactivate(String id) => '/api/v1/devices/$id/deactivate';
 
   // Security
   static String farmSecurityEvents(String farmId) =>
@@ -104,6 +108,14 @@ class ApiConstants {
 
   // Activities
   static const String activities = '/api/v1/activities';
+
+  // Analytics
+  static const String parcelComparison = '/api/v1/analytics/parcels/compare';
+  static String waterConsumptionReport(String zoneId) =>
+      '/api/v1/zones/$zoneId/irrigation/reports/water-consumption';
+  static String securityEventsExport(String farmId) =>
+      '/api/v1/farms/$farmId/security/events/export';
+  static const String activityLog = '/api/v1/activity-log';
 
   // Onboarding
   static const String onboardingStatus = '/api/v1/onboarding/status';

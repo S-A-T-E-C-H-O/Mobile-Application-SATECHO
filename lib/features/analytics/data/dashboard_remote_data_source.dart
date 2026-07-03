@@ -21,8 +21,14 @@ class DashboardRemoteDataSource {
       totalZones: (d['totalZones'] as num?)?.toInt() ?? 0,
       onlineDevices: (d['onlineDevices'] as num?)?.toInt() ?? 0,
       offlineDevices: (d['offlineDevices'] as num?)?.toInt() ?? 0,
-      criticalAlerts: (d['errorDevices'] as num?)?.toInt() ?? 0,
+      criticalAlerts: (d['activeAlertCount'] as num?)?.toInt() ??
+          (d['errorDevices'] as num?)?.toInt() ??
+          0,
       firstFarmName: firstFarmName,
+      avgMoisture7d: (d['avgMoisture7d'] as num?)?.toDouble(),
+      avgEc7d: (d['avgEc7d'] as num?)?.toDouble(),
+      weeklyIrrigationHours: (d['weeklyIrrigationHours'] as num?)?.toDouble(),
+      criticalMoisture: d['criticalMoisture'] as bool? ?? false,
     );
   }
 }

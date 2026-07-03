@@ -16,7 +16,12 @@ class FieldVisitRepositoryImpl implements FieldVisitRepository {
 
   @override
   Future<void> saveFieldVisit(FieldVisitDraft draft) async {
-    await _remote.completeVisit(draft.visitId);
+    await _remote.completeVisit(
+      draft.visitId,
+      latitude: draft.latitude,
+      longitude: draft.longitude,
+      photoBase64: draft.photoBase64,
+    );
   }
 
   @override

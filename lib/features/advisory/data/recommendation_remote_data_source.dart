@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/network/api_client.dart';
 import 'package:satecho_mobile/features/advisory/data/recommendation_model.dart';
 
@@ -25,6 +25,28 @@ class RecommendationRemoteDataSource {
   Future<void> dismiss(String recommendationId) async {
     await _client.patch<void>(
       ApiConstants.dismissRecommendation(recommendationId),
+    );
+  }
+
+  Future<void> createRecommendation({
+    required int farmerId,
+    int? zoneId,
+    required String title,
+    required String description,
+    String? recommendedActions,
+    required String priority,
+  }) async {
+    await _client.post<void>(
+      ApiConstants.recommendations,
+      data: {
+        'farmerId': farmerId,
+        if (zoneId != null) 'zoneId': zoneId,
+        'title': title,
+        'description': description,
+        if (recommendedActions != null)
+          'recommendedActions': recommendedActions,
+        'priority': priority,
+      },
     );
   }
 }

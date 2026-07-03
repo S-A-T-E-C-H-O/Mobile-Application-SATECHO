@@ -26,4 +26,9 @@ class AuthLocalDataSource {
   }
 
   Future<void> clearSession() => _storage.clear();
+
+  Future<bool> isBiometricEnabled() => _storage.readBiometricEnabled();
+
+  Future<void> setBiometricEnabled(bool enabled) =>
+      _storage.saveBiometricEnabled(enabled);
 }

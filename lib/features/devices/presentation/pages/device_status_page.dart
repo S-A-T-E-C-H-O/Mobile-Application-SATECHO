@@ -105,12 +105,12 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> {
                         checkmarkColor: AppColors.primary,
                         labelStyle: TextStyle(
                           color: selected ? AppColors.primary : AppColors.muted,
-                          fontWeight: selected
-                              ? FontWeight.w700
-                              : FontWeight.w400,
+                          fontWeight:
+                              selected ? FontWeight.w700 : FontWeight.w400,
                         ),
                         side: BorderSide(
-                          color: selected ? AppColors.primary : AppColors.border,
+                          color:
+                              selected ? AppColors.primary : AppColors.border,
                         ),
                         backgroundColor: AppColors.surface,
                       ),

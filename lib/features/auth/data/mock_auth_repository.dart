@@ -33,6 +33,9 @@ class MockAuthRepository implements AuthRepository {
     required String email,
     required String password,
     List<String> roles = const ['ROLE_FARMER'],
+    String? registrationNumber,
+    String? specialty,
+    int? yearsOfExperience,
   }) async {}
 
   @override
@@ -40,4 +43,19 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Future<void> resendVerification({required String email}) async {}
+
+  @override
+  Future<void> forgotPassword({required String email}) async {}
+
+  @override
+  Future<void> resetPassword({
+    required String token,
+    required String newPassword,
+  }) async {}
+
+  @override
+  Future<bool> isBiometricEnabled() async => false;
+
+  @override
+  Future<void> setBiometricEnabled(bool enabled) async {}
 }

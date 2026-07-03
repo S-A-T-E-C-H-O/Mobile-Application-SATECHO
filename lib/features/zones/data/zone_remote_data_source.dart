@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/network/api_client.dart';
 import 'package:satecho_mobile/features/zones/data/zone_model.dart';
 
@@ -19,8 +19,8 @@ class ZoneRemoteDataSource {
 
   Future<List<ZoneModel>> getZonesByFarm(String farmId) async {
     try {
-      final response = await _client
-          .get<List<dynamic>>(ApiConstants.farmZones(farmId));
+      final response =
+          await _client.get<List<dynamic>>(ApiConstants.farmZones(farmId));
       return (response.data as List<dynamic>)
           .map((e) => ZoneModel.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -32,5 +32,26 @@ class ZoneRemoteDataSource {
   Future<void> updateThresholds(
       String zoneId, Map<String, dynamic> data) async {
     await _client.patch<void>(ApiConstants.zoneThresholds(zoneId), data: data);
+  }
+
+  Future<List<Map<String, dynamic>>> getHistory(
+    String zoneId, {
+    required String metric,
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    try {
+      final response = await _client.get<List<dynamic>>(
+        ApiConstants.zoneHistoryTelemetry(zoneId),
+        queryParameters: {
+          'metric': metric,
+          'from': from.toUtc().toIso8601String(),
+          'to': to.toUtc().toIso8601String(),
+        },
+      );
+      return (response.data as List<dynamic>).cast<Map<String, dynamic>>();
+    } catch (_) {
+      return const [];
+    }
   }
 }

@@ -57,7 +57,22 @@ class _FakeAuthRepository implements AuthRepository {
   Future<void> resendVerification({required String email}) async {}
 
   @override
+  Future<void> forgotPassword({required String email}) async {}
+
+  @override
+  Future<bool> isBiometricEnabled() async => false;
+
+  @override
+  Future<void> resetPassword({
+    required String token,
+    required String newPassword,
+  }) async {}
+
+  @override
   Future<AuthSession?> restoreSession() async => null;
+
+  @override
+  Future<void> setBiometricEnabled(bool enabled) async {}
 
   @override
   Future<AuthSession> signIn({
@@ -74,6 +89,9 @@ class _FakeAuthRepository implements AuthRepository {
     required String email,
     required String password,
     List<String> roles = const ['ROLE_FARMER'],
+    String? registrationNumber,
+    String? specialty,
+    int? yearsOfExperience,
   }) async {}
 
   @override

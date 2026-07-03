@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -123,8 +123,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(7),
-                                borderSide: const BorderSide(
-                                    color: AppColors.primary),
+                                borderSide:
+                                    const BorderSide(color: AppColors.primary),
                               ),
                             ),
                           ),
@@ -164,8 +164,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                           AnimatedBuilder(
                             animation: _controller,
                             builder: (context, _) => FilledButton(
-                              onPressed:
-                                  _controller.isLoading ? null : _submit,
+                              onPressed: _controller.isLoading ? null : _submit,
                               style: FilledButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 minimumSize: const Size.fromHeight(48),
