@@ -1,4 +1,4 @@
-import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
+﻿import 'package:satecho_mobile/features/notifications/domain/alert_severity.dart';
 
 class NotificationModel {
   const NotificationModel({
@@ -39,8 +39,7 @@ class NotificationModel {
   AlertSeverity get severity {
     final t = type.toUpperCase();
     if (t.contains('CRITICAL')) return AlertSeverity.critical;
-    if (t.contains('WARNING') || t.contains('ALERT'))
-      return AlertSeverity.warning;
+    if (t.contains('WARNING') || t.contains('ALERT')) return AlertSeverity.warning;
     return AlertSeverity.info;
   }
 

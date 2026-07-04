@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
@@ -42,14 +42,12 @@ class _AlertsPageState extends State<AlertsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Alerts',
-                    style: Theme.of(context).textTheme.headlineLarge),
+                Text('Alerts', style: Theme.of(context).textTheme.headlineLarge),
                 IconButton(
                   icon: const Icon(Icons.history),
                   tooltip: 'Notification history',
                   onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (_) => const NotificationsScreen()),
+                    MaterialPageRoute(builder: (_) => const NotificationsScreen()),
                   ),
                 ),
               ],

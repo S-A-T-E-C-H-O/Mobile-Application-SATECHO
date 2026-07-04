@@ -27,8 +27,7 @@ class NotificationsController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     final all = List<AppNotification>.of(await _getNotifications());
-    all.sort(
-        (a, b) => (b.sentAt ?? DateTime(0)).compareTo(a.sentAt ?? DateTime(0)));
+    all.sort((a, b) => (b.sentAt ?? DateTime(0)).compareTo(a.sentAt ?? DateTime(0)));
     notifications = all;
     isLoading = false;
     notifyListeners();

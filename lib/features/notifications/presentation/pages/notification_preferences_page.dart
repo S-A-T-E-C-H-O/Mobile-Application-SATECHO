@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -58,73 +58,73 @@ class _NotificationPreferencesPageState
               if (_controller.isLoading)
                 const Center(child: CircularProgressIndicator())
               else ...[
-                _PreferenceTile(
-                  icon: Icons.water_drop_outlined,
-                  title: 'Irrigation alerts',
-                  subtitle: 'Irrigation start, stop and anomalies',
-                  value: _controller.irrigationAlerts,
-                  onChanged: (v) => _controller.irrigationAlerts = v,
-                ),
-                _PreferenceTile(
-                  icon: Icons.grass_outlined,
-                  title: 'Soil alerts',
-                  subtitle: 'Humidity, salinity and pH thresholds',
-                  value: _controller.soilAlerts,
-                  onChanged: (v) => _controller.soilAlerts = v,
-                ),
-                _PreferenceTile(
-                  icon: Icons.security_outlined,
-                  title: 'Security alerts',
-                  subtitle: 'Motion detection and perimeter events',
-                  value: _controller.securityAlerts,
-                  onChanged: (v) => _controller.securityAlerts = v,
-                ),
-                _PreferenceTile(
-                  icon: Icons.cloud_outlined,
-                  title: 'Weather alerts',
-                  subtitle: 'Rain, frost and extreme temperatures',
-                  value: _controller.weatherAlerts,
-                  onChanged: (v) => _controller.weatherAlerts = v,
-                ),
-                _PreferenceTile(
-                  icon: Icons.notifications_none,
-                  title: 'System alerts',
-                  subtitle: 'Device status and connectivity issues',
-                  value: _controller.systemAlerts,
-                  onChanged: (v) => _controller.systemAlerts = v,
-                ),
-                const SizedBox(height: 16),
-                if (_controller.feedbackMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      _controller.feedbackMessage!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: _controller.isError
-                            ? AppColors.danger
-                            : AppColors.primary,
-                        fontSize: 14,
-                      ),
+              _PreferenceTile(
+                icon: Icons.water_drop_outlined,
+                title: 'Irrigation alerts',
+                subtitle: 'Irrigation start, stop and anomalies',
+                value: _controller.irrigationAlerts,
+                onChanged: (v) => _controller.irrigationAlerts = v,
+              ),
+              _PreferenceTile(
+                icon: Icons.grass_outlined,
+                title: 'Soil alerts',
+                subtitle: 'Humidity, salinity and pH thresholds',
+                value: _controller.soilAlerts,
+                onChanged: (v) => _controller.soilAlerts = v,
+              ),
+              _PreferenceTile(
+                icon: Icons.security_outlined,
+                title: 'Security alerts',
+                subtitle: 'Motion detection and perimeter events',
+                value: _controller.securityAlerts,
+                onChanged: (v) => _controller.securityAlerts = v,
+              ),
+              _PreferenceTile(
+                icon: Icons.cloud_outlined,
+                title: 'Weather alerts',
+                subtitle: 'Rain, frost and extreme temperatures',
+                value: _controller.weatherAlerts,
+                onChanged: (v) => _controller.weatherAlerts = v,
+              ),
+              _PreferenceTile(
+                icon: Icons.notifications_none,
+                title: 'System alerts',
+                subtitle: 'Device status and connectivity issues',
+                value: _controller.systemAlerts,
+                onChanged: (v) => _controller.systemAlerts = v,
+              ),
+              const SizedBox(height: 16),
+              if (_controller.feedbackMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    _controller.feedbackMessage!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: _controller.isError
+                          ? AppColors.danger
+                          : AppColors.primary,
+                      fontSize: 14,
                     ),
                   ),
-                FilledButton(
-                  onPressed: _controller.isSaving ? null : _controller.save,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    minimumSize: const Size.fromHeight(48),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  child: _controller.isSaving
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Colors.white),
-                        )
-                      : const Text('Save preferences'),
                 ),
+              FilledButton(
+                onPressed: _controller.isSaving ? null : _controller.save,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  minimumSize: const Size.fromHeight(48),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                child: _controller.isSaving
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
+                    : const Text('Save preferences'),
+              ),
               ],
             ],
           );
@@ -172,10 +172,11 @@ class _PreferenceTile extends StatelessWidget {
             child: Icon(icon, color: AppColors.primary, size: 18),
           ),
           title: Text(title,
-              style:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+              style: const TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w600)),
           subtitle: Text(subtitle,
-              style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+              style:
+                  const TextStyle(color: AppColors.muted, fontSize: 13)),
           trailing: Switch(
             value: value,
             onChanged: onChanged,
