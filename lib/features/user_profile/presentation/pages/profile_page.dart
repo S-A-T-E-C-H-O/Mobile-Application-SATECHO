@@ -6,6 +6,8 @@ import 'package:satecho_mobile/core/widgets/app_card.dart';
 import 'package:satecho_mobile/features/billing/presentation/pages/subscription_page.dart';
 import 'package:satecho_mobile/features/notifications/presentation/pages/notification_preferences_page.dart';
 import 'package:satecho_mobile/features/user_profile/presentation/controllers/profile_controller.dart';
+import 'package:satecho_mobile/features/user_profile/presentation/pages/edit_profile_page.dart';
+import 'package:satecho_mobile/features/activity_log/presentation/pages/activity_log_list_page.dart';
 import 'package:satecho_mobile/features/user_profile/presentation/widgets/profile_option_tile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -97,10 +99,32 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 24),
+              const _BiometricLoginToggle(),
+              const SizedBox(height: 24),
               AppCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
+                    ProfileOptionTile(
+                      icon: Icons.edit_outlined,
+                      label: 'Edit profile',
+                      value: '',
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => EditProfilePage(currentName: profile.name),
+                        ),
+                      ),
+                    ),
+                    ProfileOptionTile(
+                      icon: Icons.history,
+                      label: 'Activity log',
+                      value: '',
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const ActivityLogListPage(),
+                        ),
+                      ),
+                    ),
                     ProfileOptionTile(
                       icon: Icons.notifications_none,
                       label: 'Notifications',
@@ -164,6 +188,67 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         );
       },
+    );
+  }
+}
+
+/// Lets the farmer opt in to fingerprint/Face ID login (EP-002-TS004).
+/// Disabled automatically when the device has no enrolled biometric sensor.
+class _BiometricLoginToggle extends StatefulWidget {
+  const _BiometricLoginToggle();
+
+  @override
+  State<_BiometricLoginToggle> createState() => _BiometricLoginToggleState();
+}
+
+class _BiometricLoginToggleState extends State<_BiometricLoginToggle> {
+  bool _sensorAvailable = false;
+  bool _enabled = false;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final deps = AppDependenciesScope.of(context);
+    if (!deps.hasAuthRepository) {
+      setState(() => _loaded = true);
+      return;
+    }
+    final available = await deps.biometricService.isAvailable();
+    final enabled = await deps.authRepository.isBiometricEnabled();
+    if (!mounted) return;
+    setState(() {
+      _sensorAvailable = available;
+      _enabled = enabled;
+      _loaded = true;
+    });
+  }
+
+  Future<void> _toggle(bool value) async {
+    final deps = AppDependenciesScope.of(context);
+    if (!deps.hasAuthRepository) return;
+    await deps.authRepository.setBiometricEnabled(value);
+    if (!mounted) return;
+    setState(() => _enabled = value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_loaded || !_sensorAvailable) return const SizedBox.shrink();
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: SwitchListTile(
+        secondary: const Icon(Icons.fingerprint, color: AppColors.primary),
+        title: const Text('Biometric login'),
+        subtitle: const Text('Use fingerprint or Face ID to log in faster'),
+        value: _enabled,
+        onChanged: _toggle,
+        activeColor: AppColors.primary,
+      ),
     );
   }
 }

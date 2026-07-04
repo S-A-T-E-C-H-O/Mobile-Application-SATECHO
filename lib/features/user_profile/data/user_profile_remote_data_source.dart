@@ -19,4 +19,18 @@ class UserProfileRemoteDataSource {
         .map((e) => FarmModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
+
+  Future<void> updateProfile({required String fullName}) async {
+    await _client.patch<void>(ApiConstants.me, data: {'fullName': fullName});
+  }
+
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    await _client.post<void>(
+      ApiConstants.changePassword,
+      data: {'currentPassword': currentPassword, 'newPassword': newPassword},
+    );
+  }
 }

@@ -19,4 +19,13 @@ class MockUserProfileRepository implements UserProfileRepository {
 
   @override
   Future<void> logout() async {}
+
+  @override
+  Future<void> updateProfile({required String fullName}) async {}
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {}
 }
