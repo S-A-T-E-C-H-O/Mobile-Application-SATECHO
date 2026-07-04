@@ -3,4 +3,9 @@
 abstract class UserProfileRepository {
   Future<UserProfile> getProfile();
   Future<void> logout();
+  Future<void> updateProfile({required String fullName});
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }

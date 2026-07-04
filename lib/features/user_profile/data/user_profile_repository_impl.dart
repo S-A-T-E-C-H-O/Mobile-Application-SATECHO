@@ -34,4 +34,18 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
 
   @override
   Future<void> logout() => _local.clearSession();
+
+  @override
+  Future<void> updateProfile({required String fullName}) =>
+      _remote.updateProfile(fullName: fullName);
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) =>
+      _remote.changePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      );
 }
