@@ -98,12 +98,9 @@ class _ParcelComparisonPageState extends State<ParcelComparisonPage> {
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 6),
-                        Text(
-                            'Moisture: ${result.soilMoisture?.toStringAsFixed(1) ?? '-'}%'),
-                        Text(
-                            'EC: ${result.electricalConductivity?.toStringAsFixed(2) ?? '-'} dS/m'),
-                        Text(
-                            'Temperature: ${result.soilTemperature?.toStringAsFixed(1) ?? '-'}°C'),
+                        Text('Moisture: ${result.soilMoisture?.toStringAsFixed(1) ?? '-'}%'),
+                        Text('EC: ${result.electricalConductivity?.toStringAsFixed(2) ?? '-'} dS/m'),
+                        Text('Temperature: ${result.soilTemperature?.toStringAsFixed(1) ?? '-'}°C'),
                       ],
                     ),
                   ),
