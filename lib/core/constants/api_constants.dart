@@ -2,7 +2,7 @@ class ApiConstants {
   ApiConstants._();
 
   static const String baseUrl =
-      'http://agrosafe-back.eastus2.azurecontainer.io:8080';
+      'https://agrosafe-back.bluemeadow-4bdb72df.eastus.azurecontainerapps.io';
 
   // Auth
   static const String signIn = '/api/v1/authentication/sign-in';
