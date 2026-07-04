@@ -59,7 +59,8 @@ class TrendChartCard extends StatelessWidget {
         ),
         rightTitles:
             const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles:
+            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
@@ -67,14 +68,13 @@ class TrendChartCard extends StatelessWidget {
             interval: (points.length / 3).clamp(1, double.infinity).toDouble(),
             getTitlesWidget: (value, meta) {
               final idx = value.round();
-              if (idx < 0 || idx >= points.length)
-                return const SizedBox.shrink();
+              if (idx < 0 || idx >= points.length) return const SizedBox.shrink();
               final ts = points[idx].timestamp;
               return Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text('${ts.month}/${ts.day}',
-                    style:
-                        const TextStyle(color: AppColors.muted, fontSize: 10)),
+                    style: const TextStyle(
+                        color: AppColors.muted, fontSize: 10)),
               );
             },
           ),
@@ -103,8 +103,7 @@ class TrendChartCard extends StatelessWidget {
           color: color,
           barWidth: 3,
           dotData: const FlDotData(show: false),
-          belowBarData:
-              BarAreaData(show: true, color: color.withValues(alpha: 0.12)),
+          belowBarData: BarAreaData(show: true, color: color.withValues(alpha: 0.12)),
         ),
       ],
     );

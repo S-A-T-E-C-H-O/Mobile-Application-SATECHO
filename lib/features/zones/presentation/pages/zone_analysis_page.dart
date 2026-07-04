@@ -38,8 +38,7 @@ class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
     final buffer = StringBuffer('timestamp,metric,value\n');
     for (final (metric, _, _) in ZoneAnalysisController.metrics) {
       for (final point in _controller.series[metric] ?? const []) {
-        buffer.writeln(
-            '${point.timestamp.toIso8601String()},$metric,${point.value}');
+        buffer.writeln('${point.timestamp.toIso8601String()},$metric,${point.value}');
       }
     }
     await Share.share(
@@ -86,10 +85,9 @@ class _ZoneAnalysisPageState extends State<ZoneAnalysisPage> {
                   ),
                   IconButton(
                     tooltip: 'Export CSV',
-                    onPressed:
-                        _controller.series.values.any((s) => s.isNotEmpty)
-                            ? _exportCsv
-                            : null,
+                    onPressed: _controller.series.values.any((s) => s.isNotEmpty)
+                        ? _exportCsv
+                        : null,
                     icon: const Icon(Icons.ios_share),
                   ),
                 ],
