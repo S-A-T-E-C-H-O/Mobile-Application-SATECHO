@@ -1,5 +1,6 @@
 class OnboardingStatusModel {
-  const OnboardingStatusModel({required this.completed, required this.currentStep});
+  const OnboardingStatusModel(
+      {required this.completed, required this.currentStep});
 
   final bool completed;
   final int currentStep;

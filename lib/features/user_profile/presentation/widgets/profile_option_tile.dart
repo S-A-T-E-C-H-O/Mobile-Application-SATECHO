@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 
@@ -21,27 +21,27 @@ class ProfileOptionTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: AppColors.muted, size: 22),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 16, color: AppColors.text),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: AppColors.border)),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.muted, size: 22),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: 16, color: AppColors.text),
+              ),
             ),
-          ),
-          Text(value,
-              style: const TextStyle(fontSize: 14, color: AppColors.muted)),
-          const SizedBox(width: 6),
-          const Icon(Icons.chevron_right, color: Color(0xFF7D877D), size: 20),
-        ],
+            Text(value,
+                style: const TextStyle(fontSize: 14, color: AppColors.muted)),
+            const SizedBox(width: 6),
+            const Icon(Icons.chevron_right, color: Color(0xFF7D877D), size: 20),
+          ],
+        ),
       ),
-    ),
     );
   }
 }

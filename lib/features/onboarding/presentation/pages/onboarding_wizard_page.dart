@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -218,8 +218,7 @@ class _ZoneStep extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.primary.withValues(alpha: 0.06),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-                color: AppColors.primary.withValues(alpha: 0.2)),
+            border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
           ),
           child: Row(
             children: [
@@ -252,8 +251,7 @@ class _ReviewStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Ready to go!',
-            style: Theme.of(context).textTheme.titleLarge),
+        Text('Ready to go!', style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 8),
         Text('Review your setup before finishing',
             style: Theme.of(context)
@@ -263,9 +261,7 @@ class _ReviewStep extends StatelessWidget {
         const SizedBox(height: 28),
         _ReviewItem(label: 'Farm name', value: controller.farmName),
         _ReviewItem(label: 'Location', value: controller.farmLocation),
-        _ReviewItem(
-            label: 'Area',
-            value: '${controller.farmHectares} ha'),
+        _ReviewItem(label: 'Area', value: '${controller.farmHectares} ha'),
         _ReviewItem(label: 'Crop', value: controller.cropType),
         _ReviewItem(
             label: 'First zone',
@@ -299,14 +295,12 @@ class _ReviewItem extends StatelessWidget {
           SizedBox(
             width: 120,
             child: Text(label,
-                style: const TextStyle(
-                    color: AppColors.muted, fontSize: 14)),
+                style: const TextStyle(color: AppColors.muted, fontSize: 14)),
           ),
           Expanded(
             child: Text(
               value.isEmpty ? '—' : value,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600, fontSize: 14),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
           ),
         ],
@@ -316,8 +310,7 @@ class _ReviewItem extends StatelessWidget {
 }
 
 class _WizardNav extends StatelessWidget {
-  const _WizardNav(
-      {required this.controller, required this.onFinish});
+  const _WizardNav({required this.controller, required this.onFinish});
 
   final OnboardingWizardController controller;
   final VoidCallback onFinish;
@@ -334,8 +327,7 @@ class _WizardNav extends StatelessWidget {
             if (controller.step > 0)
               Expanded(
                 child: OutlinedButton(
-                  onPressed:
-                      controller.isLoading ? null : controller.prevStep,
+                  onPressed: controller.isLoading ? null : controller.prevStep,
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(48),
                     shape: RoundedRectangleBorder(
@@ -420,8 +412,7 @@ class _CropDropdownState extends State<_CropDropdown> {
                       c
                           .split('_')
                           .map((w) =>
-                              w[0].toUpperCase() +
-                              w.substring(1).toLowerCase())
+                              w[0].toUpperCase() + w.substring(1).toLowerCase())
                           .join(' '),
                     ),
                   ))
@@ -467,16 +458,15 @@ class _Field extends StatelessWidget {
             hintText: hint,
             filled: true,
             fillColor: AppColors.surface,
-            contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16, vertical: 15),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7),
               borderSide: const BorderSide(color: Color(0xFFD3D7D1)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7),
-              borderSide:
-                  const BorderSide(color: AppColors.primary),
+              borderSide: const BorderSide(color: AppColors.primary),
             ),
           ),
         ),

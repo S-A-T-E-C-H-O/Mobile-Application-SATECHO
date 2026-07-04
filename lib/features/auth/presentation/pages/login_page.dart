@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/roles/user_role.dart';
@@ -38,14 +38,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submit() async {
     final session = await _controller.login();
-    if (!mounted) return;
-    widget.onLoggedIn(session?.role ?? UserRole.farmer);
+    if (!mounted || session == null) return;
+    await widget.onLoggedIn(session.role);
   }
 
   Future<void> _submitBiometric() async {
     final session = await _controller.loginWithBiometrics();
     if (!mounted || session == null) return;
-    widget.onLoggedIn(session.role);
+    await widget.onLoggedIn(session.role);
   }
 
   @override
