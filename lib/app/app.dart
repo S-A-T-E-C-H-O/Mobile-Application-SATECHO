@@ -5,8 +5,10 @@ import 'roles/user_role.dart';
 import 'router/agronomist_shell.dart';
 import 'router/farmer_shell.dart';
 import 'theme/app_theme.dart';
+import 'package:satecho_mobile/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:satecho_mobile/features/auth/presentation/pages/login_page.dart';
 import 'package:satecho_mobile/features/auth/presentation/pages/register_page.dart';
+import 'package:satecho_mobile/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:satecho_mobile/features/auth/presentation/pages/verify_email_page.dart';
 import 'package:satecho_mobile/features/onboarding/presentation/pages/onboarding_wizard_page.dart';
 
@@ -31,7 +33,15 @@ class SatechoApp extends StatelessWidget {
   }
 }
 
-enum _AppScreen { login, register, verifyEmail, onboarding, home }
+enum _AppScreen {
+  login,
+  register,
+  verifyEmail,
+  onboarding,
+  home,
+  forgotPassword,
+  resetPassword,
+}
 
 class _AuthFlow extends StatefulWidget {
   const _AuthFlow();
@@ -52,8 +62,7 @@ class _AuthFlowState extends State<_AuthFlow> {
     // Only check onboarding for farmers
     if (role == UserRole.farmer) {
       try {
-        final progress =
-        await deps.onboardingRepository.getProgress();
+        final progress = await deps.onboardingRepository.getProgress();
         if (!progress.completed) {
           if (mounted) setState(() => _screen = _AppScreen.onboarding);
           return;
@@ -70,25 +79,35 @@ class _AuthFlowState extends State<_AuthFlow> {
   Widget build(BuildContext context) {
     return switch (_screen) {
       _AppScreen.login => LoginPage(
-        onLoggedIn: _onLoggedIn,
-        onGoToRegister: () =>
-            setState(() => _screen = _AppScreen.register),
-      ),
+          onLoggedIn: _onLoggedIn,
+          onGoToRegister: () => setState(() => _screen = _AppScreen.register),
+          onGoToForgotPassword: () =>
+              setState(() => _screen = _AppScreen.forgotPassword),
+        ),
+      _AppScreen.forgotPassword => ForgotPasswordPage(
+          onBackToLogin: () => setState(() => _screen = _AppScreen.login),
+          onHaveResetCode: () =>
+              setState(() => _screen = _AppScreen.resetPassword),
+        ),
+      _AppScreen.resetPassword => ResetPasswordPage(
+          onDone: () => setState(() => _screen = _AppScreen.login),
+          onBackToLogin: () => setState(() => _screen = _AppScreen.login),
+        ),
       _AppScreen.register => RegisterPage(
-        onRegistered: (email) => setState(() {
-          _pendingEmail = email;
-          _screen = _AppScreen.verifyEmail;
-        }),
-        onBackToLogin: () => setState(() => _screen = _AppScreen.login),
-      ),
+          onRegistered: (email) => setState(() {
+            _pendingEmail = email;
+            _screen = _AppScreen.verifyEmail;
+          }),
+          onBackToLogin: () => setState(() => _screen = _AppScreen.login),
+        ),
       _AppScreen.verifyEmail => VerifyEmailPage(
-        email: _pendingEmail,
-        onVerified: () => setState(() => _screen = _AppScreen.login),
-        onBackToLogin: () => setState(() => _screen = _AppScreen.login),
-      ),
+          email: _pendingEmail,
+          onVerified: () => setState(() => _screen = _AppScreen.login),
+          onBackToLogin: () => setState(() => _screen = _AppScreen.login),
+        ),
       _AppScreen.onboarding => OnboardingWizardPage(
-        onCompleted: () => setState(() => _screen = _AppScreen.home),
-      ),
+          onCompleted: () => setState(() => _screen = _AppScreen.home),
+        ),
       _AppScreen.home => _RoleShell(role: _role),
     };
   }

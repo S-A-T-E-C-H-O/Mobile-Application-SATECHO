@@ -46,7 +46,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<void> _saveName() async {
     final ok = await _controller.updateProfile(_nameController.text.trim());
     if (!mounted) return;
-    _showResult(ok ? 'Profile updated' : _controller.errorMessage ?? 'Update failed');
+    _showResult(
+        ok ? 'Profile updated' : _controller.errorMessage ?? 'Update failed');
   }
 
   Future<void> _changePassword() async {
@@ -64,11 +65,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _newPasswordController.clear();
       _confirmPasswordController.clear();
     }
-    _showResult(ok ? 'Password changed' : _controller.errorMessage ?? 'Change failed');
+    _showResult(
+        ok ? 'Password changed' : _controller.errorMessage ?? 'Change failed');
   }
 
   void _showResult(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -88,17 +91,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: AppColors.surface,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(7)),
                 ),
               ),
               const SizedBox(height: 12),
               FilledButton(
                 onPressed: _controller.isLoading ? null : _saveName,
-                style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
+                style:
+                    FilledButton.styleFrom(backgroundColor: AppColors.primary),
                 child: const Text('Save name'),
               ),
               const SizedBox(height: 32),
-              Text('Change password', style: Theme.of(context).textTheme.titleMedium),
+              Text('Change password',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               TextField(
                 controller: _currentPasswordController,
@@ -107,7 +113,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   hintText: 'Current password',
                   filled: true,
                   fillColor: AppColors.surface,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(7)),
                 ),
               ),
               const SizedBox(height: 10),
@@ -118,7 +125,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   hintText: 'New password',
                   filled: true,
                   fillColor: AppColors.surface,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(7)),
                 ),
               ),
               const SizedBox(height: 10),
@@ -129,7 +137,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   hintText: 'Confirm new password',
                   filled: true,
                   fillColor: AppColors.surface,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(7)),
                 ),
               ),
               const SizedBox(height: 12),

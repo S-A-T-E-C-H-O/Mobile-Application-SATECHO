@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
@@ -116,7 +116,8 @@ class _MenuTile extends StatelessWidget {
                             fontSize: 15, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 4),
                     Text(subtitle,
-                        style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                        style: const TextStyle(
+                            color: AppColors.muted, fontSize: 13)),
                   ],
                 ),
               ),

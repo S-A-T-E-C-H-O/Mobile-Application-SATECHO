@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/features/onboarding/domain/onboarding_progress.dart';
+import 'package:satecho_mobile/features/onboarding/domain/onboarding_progress.dart';
 import 'package:satecho_mobile/features/onboarding/domain/onboarding_repository.dart';
 
 class MockOnboardingRepository implements OnboardingRepository {
@@ -13,8 +13,16 @@ class MockOnboardingRepository implements OnboardingRepository {
   @override
   Future<List<String>> getCropTypeNames() async {
     return const [
-      'CORN', 'SOYBEAN', 'WHEAT', 'COFFEE', 'AVOCADO',
-      'TOMATO', 'LETTUCE', 'BLUEBERRY', 'RICE', 'POTATO',
+      'CORN',
+      'SOYBEAN',
+      'WHEAT',
+      'COFFEE',
+      'AVOCADO',
+      'TOMATO',
+      'LETTUCE',
+      'BLUEBERRY',
+      'RICE',
+      'POTATO',
     ];
   }
 }

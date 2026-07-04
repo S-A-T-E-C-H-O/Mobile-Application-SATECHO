@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/core/constants/api_constants.dart';
+import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/network/api_client.dart';
 import 'package:satecho_mobile/features/soil_monitoring/data/farm_model.dart';
 import 'package:satecho_mobile/features/soil_monitoring/data/sensor_reading_model.dart';
@@ -29,7 +29,9 @@ class PlotRemoteDataSource {
       return (zonesResponse.data as List<dynamic>)
           .map((e) => ZoneModel.fromJson(e as Map<String, dynamic>))
           .toList();
-    }))).expand((zones) => zones).toList();
+    })))
+        .expand((zones) => zones)
+        .toList();
 
     final telemetryFutures = allZones.map((zone) async {
       final readings = await _fetchReadings(zone.id.toString());

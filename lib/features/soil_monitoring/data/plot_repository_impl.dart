@@ -1,4 +1,4 @@
-﻿import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
+import 'package:satecho_mobile/features/soil_monitoring/domain/plot.dart';
 import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dart';
 import 'package:satecho_mobile/features/soil_monitoring/domain/plot_repository.dart';
 import 'package:satecho_mobile/features/soil_monitoring/domain/plot_status.dart';
@@ -46,7 +46,8 @@ class PlotRepositoryImpl implements PlotRepository {
     };
 
     return readings
-        .where((r) => typeMap.containsKey(r.metricType.toUpperCase()) ||
+        .where((r) =>
+            typeMap.containsKey(r.metricType.toUpperCase()) ||
             typeMap.containsKey(r.metricType))
         .map((r) {
       final type = typeMap[r.metricType] ??
@@ -91,13 +92,11 @@ class PlotRepositoryImpl implements PlotRepository {
       if (r.value > zone.thresholds!.maxMoisture) return true;
       return false;
     })
-        ? (readings
-                .where((r) {
-                  final upper = r.metricType.toUpperCase();
-                  return moistureMetrics.contains(r.metricType) ||
-                      moistureMetrics.contains(upper);
-                })
-                .any((r) => r.value < zone.thresholds!.minMoisture)
+        ? (readings.where((r) {
+            final upper = r.metricType.toUpperCase();
+            return moistureMetrics.contains(r.metricType) ||
+                moistureMetrics.contains(upper);
+          }).any((r) => r.value < zone.thresholds!.minMoisture)
             ? PlotStatus.critical
             : PlotStatus.warning)
         : PlotStatus.healthy;

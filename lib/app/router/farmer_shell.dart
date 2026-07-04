@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/core/widgets/satecho_bottom_nav.dart';
 import 'package:satecho_mobile/features/advisory/presentation/pages/recommendations_page.dart';
 import 'package:satecho_mobile/features/analytics/presentation/pages/home_page.dart';
@@ -16,6 +17,16 @@ class FarmerShell extends StatefulWidget {
 
 class _FarmerShellState extends State<FarmerShell> {
   int _currentIndex = 0;
+  bool _mqttConnectRequested = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_mqttConnectRequested) {
+      _mqttConnectRequested = true;
+      AppDependenciesScope.of(context).mqttService?.connect();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

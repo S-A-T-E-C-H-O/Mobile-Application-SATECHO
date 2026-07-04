@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -111,7 +111,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       value: '',
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => EditProfilePage(currentName: profile.name),
+                          builder: (_) =>
+                              EditProfilePage(currentName: profile.name),
                         ),
                       ),
                     ),
@@ -131,8 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       value: profile.notificationPreference,
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) =>
-                              const NotificationPreferencesPage(),
+                          builder: (_) => const NotificationPreferencesPage(),
                         ),
                       ),
                     ),
