@@ -38,8 +38,8 @@ class SecurityEventRepositoryImpl implements SecurityEventRepository {
       final farms = farmsResponse.data as List<dynamic>;
       if (farms.isEmpty) return null;
       final farmId = (farms.first as Map<String, dynamic>)['id'].toString();
-      final response =
-          await _client.getBytes(ApiConstants.securityEventsExport(farmId));
+      final response = await _client
+          .getBytes(ApiConstants.securityEventsExport(farmId));
       return response.data;
     } catch (_) {
       return null;
