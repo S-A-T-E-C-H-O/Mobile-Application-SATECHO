@@ -473,7 +473,7 @@ class AppDependencies {
       EstateDetailController(getAssignedClientDetail);
 
   ZonesController createZonesController() =>
-      ZonesController(getMyFarmId, getZonesByFarm);
+      ZonesController(getMyFarmId, getZonesByFarm, realtime: realtime);
 
   ZoneAnalysisController createZoneAnalysisController() {
     final client = _apiClient;
