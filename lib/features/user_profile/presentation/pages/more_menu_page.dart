@@ -1,73 +1,113 @@
 import 'package:flutter/material.dart';
 
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
 import 'package:satecho_mobile/features/advisory/presentation/pages/recommendations_page.dart';
 import 'package:satecho_mobile/features/quick_reports/presentation/pages/quick_reports_page.dart';
+import 'package:satecho_mobile/features/user_profile/presentation/controllers/agronomist_profile_controller.dart';
 import 'agronomist_profile_page.dart';
 import 'agronomist_settings_page.dart';
 
-class MoreMenuPage extends StatelessWidget {
+class MoreMenuPage extends StatefulWidget {
   const MoreMenuPage({super.key});
 
   @override
+  State<MoreMenuPage> createState() => _MoreMenuPageState();
+}
+
+class _MoreMenuPageState extends State<MoreMenuPage> {
+  late final AgronomistProfileController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AppDependenciesScope.of(context).createAgronomistProfileController();
+    _controller.load();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(28, 34, 28, 118),
-      children: [
-        const Row(
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final profile = _controller.profile;
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(28, 34, 28, 118),
           children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: AppColors.primary,
-              child: Icon(Icons.person_outline, color: Colors.white, size: 24),
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.primary,
+                  child: Icon(Icons.person_outline,
+                      color: Colors.white, size: 24),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (profile != null)
+                        Text(profile.name,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w800))
+                      else
+                        const Text('Agronomist',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w800)),
+                      Text(
+                        profile != null
+                            ? 'Agronomist \u2022 ${profile.activeClients} active clients'
+                            : 'Loading...',
+                        style: const TextStyle(
+                            fontSize: 14, color: AppColors.muted),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Eng. Martínez',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
-                  Text('Agronomist · 23 active clients',
-                      style: TextStyle(fontSize: 14, color: AppColors.muted)),
-                ],
-              ),
+            const SizedBox(height: 24),
+            _MenuTile(
+              icon: Icons.send_outlined,
+              title: 'Recommendations',
+              subtitle: 'History and management',
+              badge: '14 pending',
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const RecommendationsPage())),
+            ),
+            _MenuTile(
+              icon: Icons.description_outlined,
+              title: 'Quick reports',
+              subtitle: 'Customer summaries',
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const QuickReportsPage())),
+            ),
+            _MenuTile(
+              icon: Icons.person_outline,
+              title: 'My profile',
+              subtitle: 'Specialties and areas',
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const AgronomistProfilePage())),
+            ),
+            _MenuTile(
+              icon: Icons.settings,
+              title: 'Settings',
+              subtitle: 'Notifications and preferences',
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const AgronomistSettingsPage())),
             ),
           ],
-        ),
-        const SizedBox(height: 24),
-        _MenuTile(
-          icon: Icons.send_outlined,
-          title: 'Recommendations',
-          subtitle: 'History and management',
-          badge: '14 pending',
-          onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const RecommendationsPage())),
-        ),
-        _MenuTile(
-          icon: Icons.description_outlined,
-          title: 'Quick reports',
-          subtitle: 'Customer summaries',
-          onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const QuickReportsPage())),
-        ),
-        _MenuTile(
-          icon: Icons.person_outline,
-          title: 'My profile',
-          subtitle: 'Specialties and areas',
-          onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const AgronomistProfilePage())),
-        ),
-        _MenuTile(
-          icon: Icons.settings,
-          title: 'Settings',
-          subtitle: 'Notifications and preferences',
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => const AgronomistSettingsPage())),
-        ),
-      ],
+        );
+      },
     );
   }
 }

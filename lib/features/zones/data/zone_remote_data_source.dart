@@ -54,4 +54,23 @@ class ZoneRemoteDataSource {
       return const [];
     }
   }
+
+  Future<Map<String, double?>> getLatestTelemetry(String zoneId) async {
+    try {
+      final response = await _client.get<List<dynamic>>(
+        ApiConstants.zoneLatestTelemetry(zoneId),
+      );
+      final readings = response.data as List<dynamic>;
+      final result = <String, double?>{};
+      for (final r in readings) {
+        final map = r as Map<String, dynamic>;
+        final metric = map['metricType'] as String?;
+        final value = (map['value'] as num?)?.toDouble();
+        if (metric != null) result[metric] = value;
+      }
+      return result;
+    } catch (_) {
+      return {};
+    }
+  }
 }

@@ -11,7 +11,7 @@ class ActivityRemoteDataSource {
     required String type,
   }) async {
     final response = await _client.post<Map<String, dynamic>>(
-      ApiConstants.activities,
+      ApiConstants.activityLog,
       data: {'zoneId': int.parse(zoneId), 'type': type},
     );
     return response.data!;

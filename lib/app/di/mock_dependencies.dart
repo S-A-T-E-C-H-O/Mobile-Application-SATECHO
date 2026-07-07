@@ -115,6 +115,7 @@ import 'package:satecho_mobile/features/priority_cases/data/priority_cases_remot
 import 'package:satecho_mobile/features/priority_cases/data/priority_cases_repository_impl.dart';
 import 'package:satecho_mobile/features/priority_cases/data/mock_priority_cases_repository.dart';
 import 'package:satecho_mobile/features/perimeter_security/application/uses_cases/get_security_events.dart';
+import 'package:satecho_mobile/features/perimeter_security/application/uses_cases/security_settings_use_cases.dart';
 import 'package:satecho_mobile/features/perimeter_security/domain/repositories/security_event_repository.dart';
 import 'package:satecho_mobile/features/perimeter_security/infrastructure/data_sources/remote/security_event_remote_data_source.dart';
 import 'package:satecho_mobile/features/perimeter_security/infrastructure/repositories/mock_security_event_repository.dart';
@@ -380,6 +381,15 @@ class AppDependencies {
   GetSecurityEvents get getSecurityEvents =>
       GetSecurityEvents(securityEventRepository);
 
+  GetSecuritySettings get getSecuritySettings =>
+      GetSecuritySettings(securityEventRepository);
+
+  UpdateSecuritySettings get updateSecuritySettings =>
+      UpdateSecuritySettings(securityEventRepository);
+
+  ToggleZoneDetection get toggleZoneDetection =>
+      ToggleZoneDetection(securityEventRepository);
+
   AuthController createAuthController() => AuthController(
         authRepository: _authRepository,
         notificationService: notificationService,
@@ -543,6 +553,9 @@ class AppDependencies {
       getSecurityEvents: getSecurityEvents,
       realtime: realtime,
       exportCsv: securityEventRepository.exportCsv,
+      getSettings: getSecuritySettings,
+      updateSettings: updateSecuritySettings,
+      toggleZoneDetection: toggleZoneDetection,
     );
   }
 }
