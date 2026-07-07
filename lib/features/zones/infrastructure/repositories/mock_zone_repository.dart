@@ -95,6 +95,9 @@ class MockZoneRepository implements ZoneRepository {
   ];
 
   @override
+  Future<String?> getMyFarmId() async => 'farm-1';
+
+  @override
   Future<Zone?> getZoneById(String zoneId) async {
     return _zones.where((zone) => zone.id == zoneId).firstOrNull;
   }

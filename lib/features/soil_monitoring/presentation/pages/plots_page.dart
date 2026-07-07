@@ -1,10 +1,11 @@
 ﻿import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
-import 'package:satecho_mobile/app/theme/app_colors.dart';
-import 'package:satecho_mobile/features/irrigation/presentation/pages/irrigation_page.dart';
+import 'package:satecho_mobile/app/theme/app_spacing.dart';
+import 'package:satecho_mobile/core/widgets/app_states.dart';
 import 'package:satecho_mobile/features/soil_monitoring/presentation/controllers/plots_controller.dart';
 import 'package:satecho_mobile/features/soil_monitoring/presentation/widgets/plot_card.dart';
+import 'package:satecho_mobile/features/zones/presentation/pages/zones_page.dart';
 
 class PlotsPage extends StatefulWidget {
   const PlotsPage({super.key});
@@ -35,34 +36,50 @@ class _PlotsPageState extends State<PlotsPage> {
       animation: _controller,
       builder: (context, _) {
         final mq = MediaQuery.of(context);
-        return ListView(
-          padding: EdgeInsets.fromLTRB(
-              20, mq.padding.top + 16, 20, mq.padding.bottom + 80),
-          children: [
-            Text('Plots', style: Theme.of(context).textTheme.headlineLarge),
-            const SizedBox(height: 28),
-            if (_controller.isLoading)
-              const Center(child: CircularProgressIndicator())
-            else if (_controller.errorMessage != null)
-              Text(
-                _controller.errorMessage!,
-                style: const TextStyle(color: AppColors.danger),
-              )
-            else
-              ..._controller.plots.map(
-                (plot) => Padding(
-                  padding: const EdgeInsets.only(bottom: 22),
-                  child: PlotCard(
-                    plot: plot,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => IrrigationPage(initialPlotId: plot.id),
+        return RefreshIndicator(
+          onRefresh: _controller.load,
+          child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.fromLTRB(
+              AppSpacing.gutter,
+              mq.padding.top + AppSpacing.md,
+              AppSpacing.gutter,
+              mq.padding.bottom + 80,
+            ),
+            children: [
+              Text('Parcelas',
+                  style: Theme.of(context).textTheme.headlineLarge),
+              AppSpacing.gapLg,
+              if (_controller.isLoading)
+                const AppLoadingState()
+              else if (_controller.errorMessage != null)
+                AppErrorState(
+                  message: _controller.errorMessage!,
+                  onRetry: _controller.load,
+                )
+              else if (_controller.plots.isEmpty)
+                const AppEmptyState(
+                  icon: Icons.grass_outlined,
+                  title: 'Aún no hay parcelas',
+                  message:
+                      'Cuando registres una parcela en tu propiedad aparecerá aquí.',
+                )
+              else
+                ..._controller.plots.map(
+                  (plot) => Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+                    child: PlotCard(
+                      plot: plot,
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const ZonesPage(),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
       },
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/core/widgets/app_states.dart';
 import 'package:satecho_mobile/features/advisory/presentation/controllers/new_recommendation_controller.dart';
 
 class NewRecommendationPage extends StatefulWidget {
@@ -137,7 +138,7 @@ class _PlotStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controller.loadingClients) {
-      return const Center(child: CircularProgressIndicator());
+      return const AppLoadingState();
     }
     final farmerIdByZoneId = <String, int>{};
     final entries = <(String, String, String)>[];
@@ -154,7 +155,11 @@ class _PlotStep extends StatelessWidget {
       }
     }
     if (entries.isEmpty) {
-      return const Center(child: Text('No assigned client parcels found'));
+      return const AppEmptyState(
+        icon: Icons.people_outline,
+        title: 'Sin parcelas asignadas',
+        message: 'No se encontraron parcelas de clientes asignados.',
+      );
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

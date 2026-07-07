@@ -55,6 +55,21 @@ class ZoneRemoteDataSource {
     }
   }
 
+  Future<String?> getMyFarmId() async {
+    try {
+      final response =
+          await _client.get<List<dynamic>>(ApiConstants.farms);
+      final farms = response.data as List<dynamic>;
+      if (farms.isNotEmpty) {
+        final first = farms.first as Map<String, dynamic>;
+        return (first['id'] as num).toInt().toString();
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<Map<String, double?>> getLatestTelemetry(String zoneId) async {
     try {
       final response = await _client.get<List<dynamic>>(
