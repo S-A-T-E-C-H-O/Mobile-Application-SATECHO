@@ -220,7 +220,8 @@ class _ReportCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text('${report.ownerName} \u2022 ${report.crop} \u2022 ${report.areaLabel}',
+          Text(
+              '${report.ownerName} \u2022 ${report.crop} \u2022 ${report.areaLabel}',
               style: const TextStyle(color: AppColors.muted, fontSize: 16)),
           const SizedBox(height: 12),
           Text(

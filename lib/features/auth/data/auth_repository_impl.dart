@@ -79,9 +79,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> clearSession() => _local.clearSession();
-
-  @override
   Future<bool> isBiometricEnabled() => _local.isBiometricEnabled();
 
   @override

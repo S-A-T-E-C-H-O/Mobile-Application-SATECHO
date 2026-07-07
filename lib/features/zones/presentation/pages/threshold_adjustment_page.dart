@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
@@ -45,10 +45,8 @@ class _ThresholdAdjustmentPageState extends State<ThresholdAdjustmentPage> {
     try {
       final repo = AppDependenciesScope.of(context).zoneRepository;
       await repo.updateThresholds(widget.zoneId, {
-        'minSoilMoisture':
-            double.tryParse(_minHumidityController.text) ?? 30,
-        'maxSoilMoisture':
-            double.tryParse(_maxHumidityController.text) ?? 70,
+        'minSoilMoisture': double.tryParse(_minHumidityController.text) ?? 30,
+        'maxSoilMoisture': double.tryParse(_maxHumidityController.text) ?? 70,
         'minElectricalConductivity':
             double.tryParse(_minEcController.text) ?? 0.5,
         'maxElectricalConductivity':
@@ -98,8 +96,8 @@ class _ThresholdAdjustmentPageState extends State<ThresholdAdjustmentPage> {
                         style: Theme.of(context).textTheme.headlineMedium),
                     Text(
                       '${widget.zoneName} · ${widget.cropType}',
-                      style: const TextStyle(
-                          color: AppColors.muted, fontSize: 13),
+                      style:
+                          const TextStyle(color: AppColors.muted, fontSize: 13),
                     ),
                   ],
                 ),
@@ -236,9 +234,7 @@ class _ThresholdField extends StatelessWidget {
       children: [
         Text(label,
             style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: color)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: color)),
         const SizedBox(height: 6),
         TextField(
           controller: controller,

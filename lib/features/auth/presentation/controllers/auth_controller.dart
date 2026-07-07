@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show PlatformException;
 
 import 'package:satecho_mobile/core/biometrics/biometric_auth_service.dart';
 import 'package:satecho_mobile/core/notifications/notification_service.dart';
@@ -99,7 +101,7 @@ class AuthController extends ChangeNotifier {
       unawaited(_notificationService?.registerDeviceToken());
       return session;
     } on Exception catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = _friendlyMessage(e);
       return null;
     } finally {
       _isLoading = false;
@@ -139,7 +141,7 @@ class AuthController extends ChangeNotifier {
       );
       return _email;
     } on Exception catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = _friendlyMessage(e);
       return null;
     } finally {
       _isLoading = false;
@@ -159,7 +161,7 @@ class AuthController extends ChangeNotifier {
       await repo.forgotPassword(email: email);
       return true;
     } on Exception catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = _friendlyMessage(e);
       return false;
     } finally {
       _isLoading = false;
@@ -180,7 +182,7 @@ class AuthController extends ChangeNotifier {
       await repo.resetPassword(token: token, newPassword: newPassword);
       return true;
     } on Exception catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = _friendlyMessage(e);
       return false;
     } finally {
       _isLoading = false;
@@ -239,9 +241,54 @@ class AuthController extends ChangeNotifier {
       }
       unawaited(_notificationService?.registerDeviceToken());
       return session;
+    } on Exception catch (e) {
+      _errorMessage = _friendlyMessage(e);
+      return null;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  /// Maps technical exceptions (Dio, secure storage, malformed JSON) to
+  /// copy that's safe to show a farmer/agronomist. Anything already
+  /// human-readable (a plain [Exception] thrown by the data layer with a
+  /// curated message, e.g. a backend validation error) passes through as
+  /// before instead of being replaced by a generic message.
+  String _friendlyMessage(Object error) {
+    if (error is DioException) {
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.connectionError:
+          return 'No se pudo conectar con el servidor. Revisa tu conexión.';
+        default:
+          return _backendMessage(error) ??
+              'Ocurrió un error inesperado. Intenta nuevamente.';
+      }
+    }
+    if (error is PlatformException || error is FormatException) {
+      return 'No se pudo restaurar la sesión. Inicia sesión nuevamente.';
+    }
+    if (error is Exception) {
+      final message = error.toString().replaceFirst('Exception: ', '');
+      return message.isEmpty
+          ? 'Ocurrió un error inesperado. Intenta nuevamente.'
+          : message;
+    }
+    return 'Ocurrió un error inesperado. Intenta nuevamente.';
+  }
+
+  /// Backend errors are expected as `{"message": "..."}` or
+  /// `{"error": "..."}`; that copy is written for end users, so it's shown
+  /// as-is instead of being collapsed into a generic message.
+  String? _backendMessage(DioException error) {
+    final data = error.response?.data;
+    if (data is Map) {
+      final message = data['message'] ?? data['error'];
+      if (message is String && message.trim().isNotEmpty) return message;
+    }
+    return null;
   }
 }

@@ -13,9 +13,6 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<void> clearSession() async {}
-
-  @override
   Future<AuthSession> signIn({
     required String email,
     required String password,

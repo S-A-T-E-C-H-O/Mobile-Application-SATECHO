@@ -47,8 +47,8 @@ class _MoreMenuPageState extends State<MoreMenuPage> {
                 const CircleAvatar(
                   radius: 24,
                   backgroundColor: AppColors.primary,
-                  child: Icon(Icons.person_outline,
-                      color: Colors.white, size: 24),
+                  child:
+                      Icon(Icons.person_outline, color: Colors.white, size: 24),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -88,8 +88,8 @@ class _MoreMenuPageState extends State<MoreMenuPage> {
               icon: Icons.description_outlined,
               title: 'Quick reports',
               subtitle: 'Customer summaries',
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const QuickReportsPage())),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const QuickReportsPage())),
             ),
             _MenuTile(
               icon: Icons.person_outline,

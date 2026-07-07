@@ -1,17 +1,13 @@
 ﻿import 'package:satecho_mobile/features/user_profile/domain/user_profile.dart';
 import 'package:satecho_mobile/features/user_profile/domain/user_profile_repository.dart';
-import 'package:satecho_mobile/features/auth/data/auth_local_data_source.dart';
 import 'package:satecho_mobile/features/user_profile/data/user_profile_remote_data_source.dart';
 
 class UserProfileRepositoryImpl implements UserProfileRepository {
   const UserProfileRepositoryImpl({
     required UserProfileRemoteDataSource remote,
-    required AuthLocalDataSource local,
-  })  : _remote = remote,
-        _local = local;
+  }) : _remote = remote;
 
   final UserProfileRemoteDataSource _remote;
-  final AuthLocalDataSource _local;
 
   @override
   Future<UserProfile> getProfile() async {
@@ -31,9 +27,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
       language: 'English',
     );
   }
-
-  @override
-  Future<void> logout() => _local.clearSession();
 
   @override
   Future<void> updateProfile({required String fullName}) =>

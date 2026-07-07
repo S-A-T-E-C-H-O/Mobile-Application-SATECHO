@@ -58,9 +58,8 @@ class _AuthFlowState extends State<_AuthFlow> {
   @override
   void initState() {
     super.initState();
-    AppDependenciesScope.of(context)
-        .sessionManager
-        .onSessionExpired = _onSessionExpired;
+    AppDependenciesScope.of(context).sessionManager.onSessionExpired =
+        _onSessionExpired;
   }
 
   void _onSessionExpired() {
