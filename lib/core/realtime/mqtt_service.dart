@@ -18,11 +18,26 @@ import 'package:satecho_mobile/features/soil_monitoring/domain/sensor_metric.dar
 class MqttService {
   MqttService({
     required RealtimeService realtime,
-    String brokerHost = 'agrosafe-mqtt.eastus2.azurecontainer.io',
-    int brokerPort = 1883,
+    String brokerHost = defaultBrokerHost,
+    int brokerPort = defaultBrokerPort,
   })  : _realtime = realtime,
         _brokerHost = brokerHost,
         _brokerPort = brokerPort;
+
+  /// One broker per environment, shared with backend/Edge/ESP32 — see
+  /// docs/mqtt-contract.md at the ecosystem root. Override per build with:
+  ///   flutter run --dart-define=MQTT_BROKER_HOST=broker.example.com
+  /// The compile-time default matches the broker the ESP32 firmware publishes
+  /// to (the previous default pointed to a different, unreachable host, so
+  /// the app listened where no device ever published).
+  static const String defaultBrokerHost = String.fromEnvironment(
+    'MQTT_BROKER_HOST',
+    defaultValue: 'satecho-mqtt-demo-cientifica.eastus.azurecontainer.io',
+  );
+  static const int defaultBrokerPort = int.fromEnvironment(
+    'MQTT_BROKER_PORT',
+    defaultValue: 1883,
+  );
 
   static const int maxReconnectAttempts = 5;
 
