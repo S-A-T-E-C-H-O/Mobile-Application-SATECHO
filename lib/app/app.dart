@@ -55,6 +55,23 @@ class _AuthFlowState extends State<_AuthFlow> {
   UserRole _role = UserRole.farmer;
   String _pendingEmail = '';
 
+  @override
+  void initState() {
+    super.initState();
+    AppDependenciesScope.of(context)
+        .sessionManager
+        .onSessionExpired = _onSessionExpired;
+  }
+
+  void _onSessionExpired() {
+    if (!mounted) return;
+    setState(() {
+      _screen = _AppScreen.login;
+      _role = UserRole.farmer;
+      _pendingEmail = '';
+    });
+  }
+
   Future<void> _onLoggedIn(UserRole role) async {
     final deps = AppDependenciesScope.of(context);
     setState(() => _role = role);
