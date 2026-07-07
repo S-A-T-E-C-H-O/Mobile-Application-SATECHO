@@ -155,58 +155,62 @@ class _ZoneCard extends StatelessWidget {
     final displayMetrics =
         zone.metrics.take(4).toList();
 
-    return InkWell(
+    return Material(
+      color: Colors.transparent,
       borderRadius: AppRadius.cardBr,
-      onTap: onTap,
-      child: AppCard(
-        padding: const EdgeInsets.fromLTRB(
-            AppSpacing.md, AppSpacing.lg, AppSpacing.md, AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        zone.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.text,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        zone.crop,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.muted,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                StatusChip(label: zone.risk, tone: _toneFromRisk(zone.risk)),
-              ],
-            ),
-            if (displayMetrics.isNotEmpty) ...[
-              AppSpacing.gapMd,
+      child: InkWell(
+        borderRadius: AppRadius.cardBr,
+        onTap: onTap,
+        child: AppCard(
+          padding: const EdgeInsets.fromLTRB(
+              AppSpacing.md, AppSpacing.lg, AppSpacing.md, AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Row(
-                children: displayMetrics
-                    .expand((metric) => [
-                          Expanded(
-                              child:
-                                  ZoneMetricCard(metric: metric)),
-                          if (metric != displayMetrics.last)
-                            const SizedBox(width: AppSpacing.sm),
-                        ])
-                    .toList(),
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          zone.name,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.text,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.xs),
+                        Text(
+                          zone.crop,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.muted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  StatusChip(label: zone.risk, tone: _toneFromRisk(zone.risk)),
+                ],
               ),
+              if (displayMetrics.isNotEmpty) ...[
+                AppSpacing.gapMd,
+                Row(
+                  children: displayMetrics
+                      .expand((metric) => [
+                            Expanded(
+                                child:
+                                    ZoneMetricCard(metric: metric)),
+                            if (metric != displayMetrics.last)
+                              const SizedBox(width: AppSpacing.sm),
+                          ])
+                      .toList(),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
