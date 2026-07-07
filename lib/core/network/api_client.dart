@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show VoidCallback, visibleForTesting;
 
 import 'package:satecho_mobile/core/constants/api_constants.dart';
 import 'package:satecho_mobile/core/storage/token_storage.dart';
 
 class ApiClient {
-  ApiClient({required TokenStorage tokenStorage}) {
+  ApiClient({required TokenStorage tokenStorage, this.onUnauthorized}) {
     _dio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
@@ -23,12 +24,36 @@ class ApiClient {
           }
           handler.next(options);
         },
-        onError: (error, handler) => handler.next(error),
+        onError: (error, handler) {
+          _handleError(error);
+          handler.next(error);
+        },
       ),
     );
   }
 
+  /// Invoked once per request that comes back with HTTP 401, i.e. the
+  /// backend considers the current token invalid/expired. Wired to
+  /// [SessionManager.logout] from the dependency composition root so a
+  /// rejected token clears local session state instead of leaving the app
+  /// believing it's still authenticated. Mutable (not constructor-only) so
+  /// it can be attached after `SessionManager` exists — `ApiClient` is
+  /// built before `SessionManager` in the current composition order.
+  VoidCallback? onUnauthorized;
+
   late final Dio _dio;
+
+  void _handleError(DioException error) {
+    if (error.response?.statusCode == 401) {
+      onUnauthorized?.call();
+    }
+  }
+
+  /// Exercises the same 401 handling the Dio interceptor uses, without
+  /// needing to fake a full HTTP transport. Mirrors the
+  /// `@visibleForTesting` seam already used by [MqttService].
+  @visibleForTesting
+  void handleErrorForTesting(DioException error) => _handleError(error);
 
   Future<Response<T>> get<T>(
     String path, {

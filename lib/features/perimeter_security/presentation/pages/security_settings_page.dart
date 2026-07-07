@@ -23,16 +23,16 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = AppDependenciesScope.of(context)
-        .createPerimeterSecurityController();
+    _controller =
+        AppDependenciesScope.of(context).createPerimeterSecurityController();
     _controller.loadSettings().then((_) {
       if (!mounted) return;
       final s = _controller.settings;
       if (s != null) {
         setState(() {
           _sensitivity = s.motionSensitivity / 100.0;
-          _nightMode =
-              s.detectionScheduleStart.isNotEmpty && s.detectionScheduleEnd.isNotEmpty;
+          _nightMode = s.detectionScheduleStart.isNotEmpty &&
+              s.detectionScheduleEnd.isNotEmpty;
           _motionAlerts = s.alertMode == 'MOTION_ONLY' || s.alertMode == 'ALL';
           _perimeterAlerts = s.alertMode == 'ALL';
         });
@@ -94,8 +94,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Text(
                     'PIR Sensor',
                     style: TextStyle(
@@ -125,8 +124,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
                       ),
                       Slider(
                         value: _sensitivity,
-                        onChanged: (v) =>
-                            setState(() => _sensitivity = v),
+                        onChanged: (v) => setState(() => _sensitivity = v),
                         activeColor: AppColors.primary,
                       ),
                     ],
@@ -145,7 +143,12 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
                   trailing: DropdownButton<String>(
                     value: _alertDelay,
                     underline: const SizedBox.shrink(),
-                    items: ['0 seconds', '5 seconds', '10 seconds', '30 seconds']
+                    items: [
+                      '0 seconds',
+                      '5 seconds',
+                      '10 seconds',
+                      '30 seconds'
+                    ]
                         .map((v) => DropdownMenuItem(value: v, child: Text(v)))
                         .toList(),
                     onChanged: (v) =>
@@ -162,8 +165,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Text(
                     'Notifications',
                     style: TextStyle(

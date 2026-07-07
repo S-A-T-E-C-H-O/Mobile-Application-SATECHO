@@ -54,7 +54,8 @@ class ZoneAnalysisController extends ChangeNotifier {
     final to = DateTime.now();
     final from = to.subtract(_periods[periodIndex]);
     for (final (metric, _, _) in metrics) {
-      final rows = await remote.getHistory(zoneId, metric: metric, from: from, to: to);
+      final rows =
+          await remote.getHistory(zoneId, metric: metric, from: from, to: to);
       series[metric] = rows
           .map((json) {
             final ts = DateTime.tryParse(json['timestamp'] as String? ?? '');

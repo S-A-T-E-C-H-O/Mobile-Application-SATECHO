@@ -2,7 +2,6 @@
 
 abstract class AuthRepository {
   Future<AuthSession?> restoreSession();
-  Future<void> clearSession();
   Future<AuthSession> signIn({required String email, required String password});
   Future<void> signUp({
     required String fullName,

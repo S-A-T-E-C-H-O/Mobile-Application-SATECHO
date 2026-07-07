@@ -18,8 +18,7 @@ class SecurityEventRepositoryImpl implements SecurityEventRepository {
 
   Future<String> _resolveFarmId() async {
     if (_cachedFarmId != null) return _cachedFarmId!;
-    final farmsResponse =
-        await _client.get<List<dynamic>>(ApiConstants.farms);
+    final farmsResponse = await _client.get<List<dynamic>>(ApiConstants.farms);
     final farms = farmsResponse.data as List<dynamic>;
     if (farms.isEmpty) throw Exception('No farms found');
     _cachedFarmId = (farms.first as Map<String, dynamic>)['id'].toString();
@@ -41,8 +40,8 @@ class SecurityEventRepositoryImpl implements SecurityEventRepository {
   Future<List<int>?> exportCsv() async {
     try {
       final farmId = await _resolveFarmId();
-      final response = await _client
-          .getBytes(ApiConstants.securityEventsExport(farmId));
+      final response =
+          await _client.getBytes(ApiConstants.securityEventsExport(farmId));
       return response.data;
     } catch (_) {
       return null;

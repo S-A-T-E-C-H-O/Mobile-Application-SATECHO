@@ -8,8 +8,8 @@ class QuickReportRemoteDataSource {
   final ApiClient _client;
 
   Future<List<ClientDetailModel>> getClientsDetailed() async {
-    final response =
-        await _client.get<List<dynamic>>(ApiConstants.agronomistClientsDetailed);
+    final response = await _client
+        .get<List<dynamic>>(ApiConstants.agronomistClientsDetailed);
     return (response.data as List<dynamic>)
         .map((e) => ClientDetailModel.fromJson(e as Map<String, dynamic>))
         .toList();

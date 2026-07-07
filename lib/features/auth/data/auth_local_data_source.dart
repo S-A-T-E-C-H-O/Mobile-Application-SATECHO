@@ -18,14 +18,20 @@ class AuthLocalDataSource {
     final meta = await _storage.readSessionMeta();
     if (meta == null) return null;
 
+    // TokenStorage only guarantees the outer JSON shape is a Map — the
+    // fields inside it are still untrusted (e.g. a future schema change,
+    // or a value written by an older app version). Falling back to "no
+    // session" here keeps a shape mismatch from crashing session restore.
+    final id = meta['id'];
+    final roles = meta['roles'];
+    if (id is! String || roles is! List) return null;
+
     return AuthSessionModel(
-      id: meta['id'] as String,
+      id: id,
       token: token,
-      roles: (meta['roles'] as List<dynamic>).cast<String>(),
+      roles: roles.whereType<String>().toList(),
     );
   }
-
-  Future<void> clearSession() => _storage.clear();
 
   Future<bool> isBiometricEnabled() => _storage.readBiometricEnabled();
 

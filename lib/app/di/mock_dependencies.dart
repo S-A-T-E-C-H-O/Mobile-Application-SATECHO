@@ -216,7 +216,6 @@ class AppDependencies {
             ActivityRepositoryImpl(ActivityRemoteDataSource(infra.client)),
         userProfileRepository = UserProfileRepositoryImpl(
           remote: UserProfileRemoteDataSource(infra.client),
-          local: AuthLocalDataSource(infra.storage),
         ),
         agronomistProfileRepository = AgronomistProfileRepositoryImpl(
           UserProfileRemoteDataSource(infra.client),
@@ -271,6 +270,10 @@ class AppDependencies {
       tokenStorage: infra.storage,
       mqttService: mqttService,
     );
+    // ApiClient is built in _buildSharedInfra(), before SessionManager
+    // exists, so the 401 callback is attached here instead of at
+    // construction time — see ApiClient.onUnauthorized.
+    infra.client.onUnauthorized = sessionManager.logout;
     notificationService = NotificationService(
       remote: DeviceTokenRemoteDataSource(infra.client),
     )..initialize();
