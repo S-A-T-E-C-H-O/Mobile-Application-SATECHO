@@ -8,6 +8,7 @@ import 'package:satecho_mobile/core/notifications/notification_service.dart';
 import 'package:satecho_mobile/core/network/connectivity_service.dart';
 import 'package:satecho_mobile/core/realtime/mqtt_service.dart';
 import 'package:satecho_mobile/core/realtime/realtime_placeholder.dart';
+import 'package:satecho_mobile/core/session/session_manager.dart';
 import 'package:satecho_mobile/core/storage/local_cache.dart';
 import 'package:satecho_mobile/core/storage/token_storage.dart';
 import 'package:satecho_mobile/features/activity_log/domain/use_cases/save_activity_offline.dart';
@@ -136,7 +137,6 @@ import 'package:satecho_mobile/features/soil_monitoring/data/plot_repository_imp
 import 'package:satecho_mobile/features/soil_monitoring/presentation/controllers/plots_controller.dart';
 import 'package:satecho_mobile/features/user_profile/domain/use_cases/get_agronomist_profile.dart';
 import 'package:satecho_mobile/features/user_profile/domain/use_cases/get_user_profile.dart';
-import 'package:satecho_mobile/features/user_profile/domain/use_cases/logout_user.dart';
 import 'package:satecho_mobile/features/user_profile/domain/agronomist_profile_repository.dart';
 import 'package:satecho_mobile/features/user_profile/domain/user_profile_repository.dart';
 import 'package:satecho_mobile/features/user_profile/data/user_profile_remote_data_source.dart';
@@ -180,8 +180,12 @@ class AppDependencies {
         biometricService = BiometricAuthService(),
         connectivity = ConnectivityService(),
         localCache = const LocalCache(),
+        _tokenStorage = const TokenStorage(FlutterSecureStorage()),
         _apiClient = null,
         _authRepository = null {
+    sessionManager = SessionManager(
+      tokenStorage: _tokenStorage,
+    );
     farmRepository = MockFarmRepository(zoneRepository);
     mqttService = null;
     notificationService = null;
@@ -247,6 +251,7 @@ class AppDependencies {
         biometricService = BiometricAuthService(),
         connectivity = ConnectivityService(),
         localCache = const LocalCache(),
+        _tokenStorage = infra.storage,
         _apiClient = infra.client,
         _authRepository = AuthRepositoryImpl(
           remote: AuthRemoteDataSource(infra.client),
@@ -262,6 +267,10 @@ class AppDependencies {
     // the app without a live broker). The farmer shell connects it once the
     // authenticated app is actually on screen.
     mqttService = MqttService(realtime: realtime);
+    sessionManager = SessionManager(
+      tokenStorage: infra.storage,
+      mqttService: mqttService,
+    );
     notificationService = NotificationService(
       remote: DeviceTokenRemoteDataSource(infra.client),
     )..initialize();
@@ -300,6 +309,8 @@ class AppDependencies {
   final BiometricAuthService biometricService;
   final ConnectivityService connectivity;
   final LocalCache localCache;
+  final TokenStorage _tokenStorage;
+  late final SessionManager sessionManager;
 
   final ApiClient? _apiClient;
   final AuthRepositoryImpl? _authRepository;
@@ -375,8 +386,6 @@ class AppDependencies {
   GetUserProfile get getUserProfile => GetUserProfile(userProfileRepository);
   GetAgronomistProfile get getAgronomistProfile =>
       GetAgronomistProfile(agronomistProfileRepository);
-
-  LogoutUser get logoutUser => LogoutUser(userProfileRepository);
 
   GetSecurityEvents get getSecurityEvents =>
       GetSecurityEvents(securityEventRepository);
@@ -506,7 +515,7 @@ class AppDependencies {
       QuickReportsController(getQuickReports);
 
   ProfileController createProfileController() =>
-      ProfileController(getUserProfile, logoutUser);
+      ProfileController(getUserProfile, sessionManager: sessionManager);
 
   AgronomistProfileController createAgronomistProfileController() =>
       AgronomistProfileController(getAgronomistProfile);
