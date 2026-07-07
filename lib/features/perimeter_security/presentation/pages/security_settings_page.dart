@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/di/mock_dependencies.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/presentation/widgets/app_card.dart';
+import '../../presentation/controllers/perimeter_security_controller.dart';
 
 class SecuritySettingsPage extends StatefulWidget {
   const SecuritySettingsPage({super.key});
@@ -11,12 +13,58 @@ class SecuritySettingsPage extends StatefulWidget {
 }
 
 class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
+  late final PerimeterSecurityController _controller;
   double _sensitivity = 0.7;
   bool _nightMode = true;
   bool _motionAlerts = true;
   bool _perimeterAlerts = true;
   String _alertDelay = '5 seconds';
-  bool _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AppDependenciesScope.of(context)
+        .createPerimeterSecurityController();
+    _controller.loadSettings().then((_) {
+      if (!mounted) return;
+      final s = _controller.settings;
+      if (s != null) {
+        setState(() {
+          _sensitivity = s.motionSensitivity / 100.0;
+          _nightMode =
+              s.detectionScheduleStart.isNotEmpty && s.detectionScheduleEnd.isNotEmpty;
+          _motionAlerts = s.alertMode == 'MOTION_ONLY' || s.alertMode == 'ALL';
+          _perimeterAlerts = s.alertMode == 'ALL';
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    setState(() {});
+    final data = <String, dynamic>{
+      'motionSensitivity': (_sensitivity * 100).round(),
+      'alertMode': _perimeterAlerts
+          ? 'ALL'
+          : _motionAlerts
+              ? 'MOTION_ONLY'
+              : 'NONE',
+      'detectionScheduleStart': _nightMode ? '18:00' : '',
+      'detectionScheduleEnd': _nightMode ? '06:00' : '',
+      'notificationContacts': '',
+    };
+    await _controller.saveSettings(data);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Security settings saved')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,34 +194,17 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
           ),
           const SizedBox(height: 28),
           FilledButton(
-            onPressed: _isSaving ? null : _save,
+            onPressed: _controller.isLoadingSettings ? null : _save,
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.primary,
               minimumSize: const Size.fromHeight(48),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
             ),
-            child: _isSaving
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
-                  )
-                : const Text('Save settings'),
+            child: const Text('Save settings'),
           ),
         ],
       ),
-    );
-  }
-
-  Future<void> _save() async {
-    setState(() => _isSaving = true);
-    await Future<void>.delayed(const Duration(milliseconds: 600));
-    if (!mounted) return;
-    setState(() => _isSaving = false);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Security settings saved')),
     );
   }
 }

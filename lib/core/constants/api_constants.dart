@@ -85,6 +85,8 @@ class ApiConstants {
       '/api/v1/security/events/$eventId';
   static String farmSecuritySettings(String farmId) =>
       '/api/v1/farms/$farmId/security/settings';
+  static String farmSecuritySettingsZone(String farmId, String zoneId) =>
+      '/api/v1/farms/$farmId/security/settings/zones/$zoneId';
 
   // Subscriptions
   static const String mySubscription = '/api/v1/subscriptions/me';
@@ -94,20 +96,18 @@ class ApiConstants {
 
   // Dashboard
   static const String farmerDashboard = '/api/v1/dashboard/farmer';
-  static const String agronomistDashboard = '/api/v1/dashboard/agronomist';
   static const String priorityCases = '/api/v1/dashboard/priority-cases';
 
   // Agronomist
   static const String agronomistClients = '/api/v1/agronomist/clients';
   static const String agronomistClientsDetailed =
       '/api/v1/agronomist/clients/detailed';
-  static const String agronomistSummary = '/api/v1/agronomist/summary';
   static const String agronomistVisits = '/api/v1/agronomist/visits';
   static String farmerAgronomist(String farmerId) =>
       '/api/v1/farmers/$farmerId/agronomist';
 
   // Activities
-  static const String activities = '/api/v1/activities';
+  static const String activityLog = '/api/v1/activity-log';
 
   // Analytics
   static const String parcelComparison = '/api/v1/analytics/parcels/compare';
@@ -115,7 +115,6 @@ class ApiConstants {
       '/api/v1/zones/$zoneId/irrigation/reports/water-consumption';
   static String securityEventsExport(String farmId) =>
       '/api/v1/farms/$farmId/security/events/export';
-  static const String activityLog = '/api/v1/activity-log';
 
   // Onboarding
   static const String onboardingStatus = '/api/v1/onboarding/status';

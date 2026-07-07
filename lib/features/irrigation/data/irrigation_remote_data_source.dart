@@ -24,14 +24,16 @@ class IrrigationRemoteDataSource {
     String zoneId,
     int durationMinutes,
   ) async {
-    // Fetch zone to get deviceId
     final zoneResponse =
         await _client.get<Map<String, dynamic>>(ApiConstants.zone(zoneId));
-    final deviceId = zoneResponse.data?['deviceId'] as int?;
+    final zoneData = zoneResponse.data!;
+    final farmId = zoneData['farmId'] as int?;
+    final deviceId = zoneData['deviceId'] as int?;
 
     final response = await _client.post<Map<String, dynamic>>(
       ApiConstants.startIrrigation(zoneId),
       data: {
+        'farmId': farmId,
         'deviceId': deviceId,
         'triggeredBy': 'MANUAL',
         'durationMinutes': durationMinutes,
