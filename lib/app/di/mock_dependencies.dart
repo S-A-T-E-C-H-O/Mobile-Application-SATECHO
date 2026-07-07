@@ -146,6 +146,7 @@ import 'package:satecho_mobile/features/user_profile/data/mock_user_profile_repo
 import 'package:satecho_mobile/features/user_profile/data/user_profile_repository_impl.dart';
 import 'package:satecho_mobile/features/user_profile/presentation/controllers/agronomist_profile_controller.dart';
 import 'package:satecho_mobile/features/user_profile/presentation/controllers/profile_controller.dart';
+import 'package:satecho_mobile/features/zones/domain/use_cases/get_my_farm_id.dart';
 import 'package:satecho_mobile/features/zones/domain/use_cases/get_zone_by_id.dart';
 import 'package:satecho_mobile/features/zones/domain/use_cases/get_zones_by_farm.dart';
 import 'package:satecho_mobile/features/zones/domain/zone_repository.dart';
@@ -153,6 +154,7 @@ import 'package:satecho_mobile/features/zones/data/zone_remote_data_source.dart'
 import 'package:satecho_mobile/features/zones/data/mock_zone_repository.dart';
 import 'package:satecho_mobile/features/zones/data/zone_repository_impl.dart';
 import 'package:satecho_mobile/features/zones/presentation/controllers/zone_analysis_controller.dart';
+import 'package:satecho_mobile/features/zones/presentation/controllers/zones_controller.dart';
 
 class AppDependencies {
   AppDependencies.mock()
@@ -327,6 +329,7 @@ class AppDependencies {
 
   GetPlots get getPlots => GetPlots(plotRepository);
   GetPlotById get getPlotById => GetPlotById(plotRepository);
+  GetMyFarmId get getMyFarmId => GetMyFarmId(zoneRepository);
   GetZonesByFarm get getZonesByFarm => GetZonesByFarm(zoneRepository);
   GetZoneById get getZoneById => GetZoneById(zoneRepository);
 
@@ -468,6 +471,9 @@ class AppDependencies {
 
   EstateDetailController createEstateDetailController() =>
       EstateDetailController(getAssignedClientDetail);
+
+  ZonesController createZonesController() =>
+      ZonesController(getMyFarmId, getZonesByFarm);
 
   ZoneAnalysisController createZoneAnalysisController() {
     final client = _apiClient;

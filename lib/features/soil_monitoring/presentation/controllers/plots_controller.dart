@@ -19,7 +19,7 @@ class PlotsController extends ChangeNotifier {
     try {
       plots = await _getPlots();
     } catch (_) {
-      errorMessage = 'Could not load plots';
+      errorMessage = 'No pudimos cargar tus parcelas';
     } finally {
       isLoading = false;
       notifyListeners();

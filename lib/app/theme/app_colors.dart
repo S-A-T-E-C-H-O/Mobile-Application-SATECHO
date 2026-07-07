@@ -16,5 +16,6 @@ class AppColors {
   static const warning = Color(0xFFFFA20D);
   static const warningSoft = Color(0xFFFFE1D4);
   static const info = Color(0xFF3E80F6);
+  static const infoSoft = Color(0xFFE4EEFF);
   static const neutralTile = Color(0xFFF0EFEB);
 }

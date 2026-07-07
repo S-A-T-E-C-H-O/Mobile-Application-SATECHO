@@ -18,9 +18,16 @@ class ZoneRepositoryImpl implements ZoneRepository {
   }
 
   @override
+  Future<String?> getMyFarmId() => _remote.getMyFarmId();
+
+  @override
   Future<List<Zone>> getZonesByFarm(String farmId) async {
     final models = await _remote.getZonesByFarm(farmId);
-    return models.map((m) => _toZone(m, const {})).toList();
+    final results = await Future.wait(models.map((m) async {
+      final telemetry = await _remote.getLatestTelemetry(m.id.toString());
+      return _toZone(m, telemetry);
+    }));
+    return results;
   }
 
   @override

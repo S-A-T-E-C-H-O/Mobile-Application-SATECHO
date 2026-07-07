@@ -10,6 +10,9 @@ class ZoneRepositoryImpl implements ZoneRepository {
   final ZoneRemoteDataSource _remote;
 
   @override
+  Future<String?> getMyFarmId() => _remote.getMyFarmId();
+
+  @override
   Future<Zone?> getZoneById(String zoneId) async {
     final model = await _remote.getZoneById(zoneId);
     return model != null ? _toZone(model) : null;

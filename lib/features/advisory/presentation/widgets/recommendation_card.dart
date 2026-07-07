@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:satecho_mobile/app/theme/app_colors.dart';
+import 'package:satecho_mobile/app/theme/app_spacing.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
+import 'package:satecho_mobile/core/widgets/status_chip.dart';
 import 'package:satecho_mobile/features/advisory/domain/recommendation.dart';
 import 'package:satecho_mobile/features/advisory/domain/recommendation_priority.dart';
 
@@ -23,6 +25,13 @@ class RecommendationCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              StatusChip(
+                label: recommendation.canComplete ? 'Pendiente' : 'Completada',
+                tone: recommendation.canComplete
+                    ? StatusTone.warning
+                    : StatusTone.success,
+              ),
+              const SizedBox(width: AppSpacing.sm),
               _PriorityChip(priority: recommendation.priority),
               const Spacer(),
               Text(
@@ -31,7 +40,7 @@ class RecommendationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm + 4),
           Text(
             recommendation.title,
             style: const TextStyle(
@@ -41,7 +50,7 @@ class RecommendationCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             recommendation.description,
             style: const TextStyle(
@@ -50,10 +59,10 @@ class RecommendationCard extends StatelessWidget {
               color: Color(0xFF404740),
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.md - 2),
           Wrap(
-            spacing: 12,
-            runSpacing: 8,
+            spacing: AppSpacing.sm + 4,
+            runSpacing: AppSpacing.sm,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               const Icon(Icons.location_on_outlined,
@@ -62,14 +71,14 @@ class RecommendationCard extends StatelessWidget {
                 recommendation.plotName,
                 style: const TextStyle(fontSize: 13, color: AppColors.muted),
               ),
-              const Text('•', style: TextStyle(color: AppColors.border)),
+              const Text('\u2022', style: TextStyle(color: AppColors.border)),
               Text(
                 recommendation.author,
                 style: const TextStyle(fontSize: 13, color: AppColors.muted),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           if (recommendation.canComplete)
             Row(
               children: [
@@ -78,25 +87,27 @@ class RecommendationCard extends StatelessWidget {
                     onPressed: onCompleted,
                     style: FilledButton.styleFrom(
                       backgroundColor: const Color(0xFF80A482),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm + 4),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(AppSpacing.sm + 2),
                       ),
                     ),
                     child: const Text(
-                      'Mark completed',
+                      'Marcar completada',
                       style: TextStyle(fontSize: 14),
                     ),
                   ),
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: AppSpacing.md - 2),
                 IconButton.filledTonal(
                   onPressed: () {},
                   icon: const Icon(Icons.description_outlined, size: 20),
                   style: IconButton.styleFrom(
                     fixedSize: const Size(48, 48),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius:
+                          BorderRadius.circular(AppSpacing.sm + 4),
                     ),
                   ),
                 ),
@@ -110,10 +121,11 @@ class RecommendationCard extends StatelessWidget {
                 foregroundColor: AppColors.muted,
                 side: const BorderSide(color: AppColors.muted),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(AppSpacing.sm + 2),
                 ),
               ),
-              child: const Text('View details', style: TextStyle(fontSize: 14)),
+              child: const Text('Ver detalle', style: TextStyle(fontSize: 14)),
             ),
         ],
       ),
@@ -130,13 +142,14 @@ class _PriorityChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final high = priority == RecommendationPriority.high;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm + 2, vertical: AppSpacing.xs),
       decoration: BoxDecoration(
         color: high ? AppColors.dangerSoft : AppColors.warningSoft,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppSpacing.sm),
       ),
       child: Text(
-        high ? 'HIGH' : 'MEDIUM',
+        high ? 'ALTA' : 'MEDIA',
         style: TextStyle(
           color: high ? const Color(0xFF9B0000) : const Color(0xFF6D3A26),
           fontSize: 12,
