@@ -33,8 +33,7 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
         }
         return;
       }
-      await Share.share(utf8.decode(bytes),
-          subject: 'Security events export');
+      await Share.share(utf8.decode(bytes), subject: 'Security events export');
     } finally {
       if (mounted) setState(() => _exporting = false);
     }
@@ -43,8 +42,8 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
   @override
   void initState() {
     super.initState();
-    _controller = AppDependenciesScope.of(context)
-        .createPerimeterSecurityController();
+    _controller =
+        AppDependenciesScope.of(context).createPerimeterSecurityController();
     _controller.load();
   }
 
@@ -108,13 +107,15 @@ class _PerimeterSecurityPageState extends State<PerimeterSecurityPage> {
                 ChoiceChip(
                   label: const Text('All'),
                   selected: _classificationFilter == null,
-                  onSelected: (_) => setState(() => _classificationFilter = null),
+                  onSelected: (_) =>
+                      setState(() => _classificationFilter = null),
                 ),
                 for (final c in const ['PERSON', 'ANIMAL', 'WIND'])
                   ChoiceChip(
                     label: Text(c),
                     selected: _classificationFilter == c,
-                    onSelected: (_) => setState(() => _classificationFilter = c),
+                    onSelected: (_) =>
+                        setState(() => _classificationFilter = c),
                   ),
               ],
             ),

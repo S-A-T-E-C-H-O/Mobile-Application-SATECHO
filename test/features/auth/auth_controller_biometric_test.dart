@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:satecho_mobile/app/roles/user_role.dart';
@@ -23,6 +24,7 @@ class _FakeBiometricService extends BiometricAuthService {
 class _FakeAuthRepository implements AuthRepository {
   bool biometricEnabled = true;
   AuthSession? sessionToRestore;
+  Object? restoreSessionError;
 
   @override
   Future<bool> isBiometricEnabled() async => biometricEnabled;
@@ -32,10 +34,11 @@ class _FakeAuthRepository implements AuthRepository {
       biometricEnabled = enabled;
 
   @override
-  Future<AuthSession?> restoreSession() async => sessionToRestore;
-
-  @override
-  Future<void> clearSession() async {}
+  Future<AuthSession?> restoreSession() async {
+    final error = restoreSessionError;
+    if (error != null) throw error;
+    return sessionToRestore;
+  }
 
   @override
   Future<AuthSession> signIn(
@@ -161,6 +164,26 @@ void main() {
       );
 
       expect(await controller.canUseBiometricLogin(), isFalse);
+    });
+
+    test(
+        'a corrupted/inaccessible session during restoreSession does not '
+        'crash and leaves a friendly, non-technical message', () async {
+      final repo = _FakeAuthRepository()
+        ..restoreSessionError =
+            PlatformException(code: 'read_error', message: 'boom');
+      final controller = AuthController(
+        authRepository: repo,
+        biometricService:
+            _FakeBiometricService(available: true, results: [true]),
+      );
+
+      final session = await controller.loginWithBiometrics();
+
+      expect(session, isNull);
+      expect(controller.isLoading, isFalse);
+      expect(controller.errorMessage, isNotNull);
+      expect(controller.errorMessage, isNot(contains('PlatformException')));
     });
   });
 }

@@ -27,10 +27,8 @@ class SecuritySettingsModel {
       alertMode: json['alertMode'] as String? ?? 'MOTION_ONLY',
       detectionScheduleStart:
           json['detectionScheduleStart'] as String? ?? '18:00',
-      detectionScheduleEnd:
-          json['detectionScheduleEnd'] as String? ?? '06:00',
-      notificationContacts:
-          json['notificationContacts'] as String? ?? '',
+      detectionScheduleEnd: json['detectionScheduleEnd'] as String? ?? '06:00',
+      notificationContacts: json['notificationContacts'] as String? ?? '',
       disabledZoneIds: (json['disabledZoneIds'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toSet() ??

@@ -19,8 +19,8 @@ class ZoneRemoteDataSource {
 
   Future<List<ZoneModel>> getZonesByFarm(String farmId) async {
     try {
-      final response = await _client
-          .get<List<dynamic>>(ApiConstants.farmZones(farmId));
+      final response =
+          await _client.get<List<dynamic>>(ApiConstants.farmZones(farmId));
       return (response.data as List<dynamic>)
           .map((e) => ZoneModel.fromJson(e as Map<String, dynamic>))
           .toList();

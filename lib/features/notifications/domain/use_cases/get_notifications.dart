@@ -6,5 +6,6 @@ class GetNotifications {
 
   final NotificationCenterRepository _repository;
 
-  Future<List<AppNotification>> call({bool? read}) => _repository.getAll(read: read);
+  Future<List<AppNotification>> call({bool? read}) =>
+      _repository.getAll(read: read);
 }
