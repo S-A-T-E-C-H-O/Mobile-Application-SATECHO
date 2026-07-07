@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 
+import 'package:satecho_mobile/app/di/mock_dependencies.dart';
 import 'package:satecho_mobile/app/theme/app_colors.dart';
 import 'package:satecho_mobile/core/widgets/app_card.dart';
 import 'package:satecho_mobile/features/billing/presentation/pages/subscription_page.dart';
@@ -63,7 +64,8 @@ class AgronomistSettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 28),
           OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: () =>
+                AppDependenciesScope.of(context).sessionManager.logout(),
             icon: const Icon(Icons.logout),
             label: const Text('Log out'),
           ),
